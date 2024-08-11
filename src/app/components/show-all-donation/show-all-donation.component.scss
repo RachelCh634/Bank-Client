@@ -1,0 +1,28 @@
+.container {
+    text-align: center;
+}
+
+.title {
+    font-size: 45px;
+    padding-top: 15px;
+}
+
+.donation-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4%;
+    padding-left: 6%;
+    padding-right: 6%;
+}
+
+@media (max-width: 600px) {
+    .donation-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    .donation-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
