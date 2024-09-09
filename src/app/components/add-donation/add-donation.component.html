@@ -1,0 +1,25 @@
+<div class="card flex justify-content-center">
+    <p>Donation Category: </p>
+    <div class="field-container">
+        <p-dropdown [options]="DonationCategoryArr" [(ngModel)]="DonationCategory" optionLabel="label"
+            placeholder="Select Donation Category">
+        </p-dropdown>
+    </div>
+    <div class="field-container">
+        <p-floatLabel>
+            <input id="HoursAvailable" type="number" pInputText [(ngModel)]="HoursAvailable" />
+            <label for="HoursAvailable">HoursAvailable</label>
+        </p-floatLabel>
+    </div>
+    <div class="field-container">
+        <p-floatLabel>
+            <input id="description" type="text" pInputText [(ngModel)]="description" />
+            <label for="description">description</label>
+        </p-floatLabel>
+    </div>
+    <div class="submitDonation">
+        <p-floatLabel>
+          <p-button label="Submit" [outlined]="true" icon="pi pi-check" iconPos="right" (click)="addDonation()" />
+        </p-floatLabel>
+      </div>
+</div>

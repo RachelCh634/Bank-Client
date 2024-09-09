@@ -1,1 +1,40 @@
-<p>login works!</p>
+<div class="card flex justify-content-center">
+  <div class="profile-container">
+    <img src="/assets/images/Icon.png" class="profile-image" />
+  </div>
+  <div class="field-container">
+    <p-floatLabel>
+      <input id="id" type="text" pInputText [(ngModel)]="id" />
+      <label for="id">Id</label>
+    </p-floatLabel>
+  </div>
+  <div class="field-container">
+    <p-floatLabel>
+      <input id="firstname" type="text" pInputText [(ngModel)]="firstname" />
+      <label for="firstname">First Name</label>
+    </p-floatLabel>
+  </div>
+  <div class="field-container">
+    <p-floatLabel>
+      <input id="lastname" type="text" pInputText [(ngModel)]="lastname" />
+      <label for="lastname">Last Name</label>
+    </p-floatLabel>
+  </div>
+  <div class="field-container">
+    <p-floatLabel>
+      <input id="email" type="email" pInputText [(ngModel)]="email" />
+      <label for="email">Email</label>
+    </p-floatLabel>
+  </div>
+  <div class="field-container">
+    <p-floatLabel>
+      <input id="address" type="text" pInputText [(ngModel)]="address" />
+      <label for="address">Address</label>
+    </p-floatLabel>
+  </div>
+  <div class="field-container">
+    <p-floatLabel>
+      <p-button label="submit" [outlined]="true" icon="pi pi-check" iconPos="right" />
+    </p-floatLabel>
+  </div>
+</div>

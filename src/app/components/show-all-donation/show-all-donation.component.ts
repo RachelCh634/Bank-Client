@@ -1,72 +1,62 @@
 import { Component } from '@angular/core';
-import { IDonation } from '../../models/donation.interface';
+import { DonationService } from '../../services/donation.service';
+import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
-import { ShowDonationComponent } from '../show-donation/show-donation.component';
+import { ButtonModule } from 'primeng/button';
+import { SidebarModule } from 'primeng/sidebar';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AddDonationComponent } from '../add-donation/add-donation.component';
+import { DialogModule } from 'primeng/dialog';
+
 
 @Component({
   selector: 'app-show-all-donation',
   standalone: true,
-  imports: [CommonModule,ShowDonationComponent],
+  imports: [CardModule, CommonModule, ButtonModule,SidebarModule,AddDonationComponent,DialogModule],
   templateUrl: './show-all-donation.component.html',
-  styleUrl: './show-all-donation.component.scss'
+  styleUrls: ['./show-all-donation.component.scss'],
 })
 export class ShowAllDonationComponent {
-  public donations:IDonation[]=[
-    {
-      Id: 1,
-      DonorId: 214901134,
-      DonationCategory: 'MakeUp',
-      HoursAvailable: 15,
-      Rating: 0
-    },
-    {
-      Id: 2,
-      DonorId: 145268569,
-      DonationCategory: 'Learning',
-      HoursAvailable: 10,
-      Rating: 0
-    },
-    {
-      Id: 3,
-      DonorId: 585326458,
-      DonationCategory: 'Playing',
-      HoursAvailable: 5,
-      Rating: 0
-    },
-    {
-      Id: 4,
-      DonorId: 332563256,
-      DonationCategory: 'Hairstyles',
-      HoursAvailable: 4,
-      Rating: 0
-    },
-    {
-      Id: 5,
-      DonorId: 327847382,
-      DonationCategory: 'Corrections',
-      HoursAvailable: 5,
-      Rating: 0
-    },
-    {
-      Id: 5,
-      DonorId: 327847382,
-      DonationCategory: 'Corrections',
-      HoursAvailable: 5,
-      Rating: 0
-    },
-    {
-      Id: 5,
-      DonorId: 327847382,
-      DonationCategory: 'Corrections',
-      HoursAvailable: 5,
-      Rating: 0
-    },
-    {
-      Id: 5,
-      DonorId: 327847382,
-      DonationCategory: 'Corrections',
-      HoursAvailable: 5,
-      Rating: 0
+
+  displayAddDonation: boolean = false;
+
+  openAddDonation() {
+    this.displayAddDonation = !this.displayAddDonation;
+  }
+
+  donations: any[] = [];
+
+  constructor(private api: DonationService) { }
+
+  ngOnInit(): void {
+    this.api.GetAllDonations().subscribe((data) => {
+      console.log(data);
+      this.donations = data;
+    });
+  }
+
+  getImage(category: string): string {
+    switch (category) {
+      case 'MakeUp':
+        return '/assets/images/makeup.png';
+      case 'Photography':
+        return '/assets/images/camera.png';
+      case 'Music':
+        return '/assets/images/music.png';
+      case 'Hair styling':
+        return '/assets/images/Hair styling.png';
+      case 'Babysitter':
+        return '/assets/images/Babysitter.png';
+      case 'Baking & Cooking':
+        return '/assets/images/Baking cooking.png';
+      case 'Maintenance':
+        return '/assets/images/maintenance.png';
+      case 'Household':
+        return '/assets/images/household.png';
+      case 'Transportation':
+        return '/assets/images/Transportation.png';
+      default:
+        return '/assets/images/music.png';
     }
-  ]
+  }
 }

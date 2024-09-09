@@ -3,15 +3,18 @@ import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { SidebarModule } from 'primeng/sidebar';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { LoginComponent } from '../login/login.component';
+import { AddDonationComponent } from '../add-donation/add-donation.component';
 
 @Component({
   selector: 'app-top-nav',
   standalone: true,
-  imports: [MenubarModule, SidebarModule],
+  imports: [MenubarModule, SidebarModule, LoginComponent, AddDonationComponent],
   templateUrl: './top-nav.component.html',
-  styleUrl: './top-nav.component.scss',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], 
+  styleUrls: ['./top-nav.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
+
 export class TopNavComponent implements OnInit {
   items: MenuItem[] | undefined;
   sidebarVisible: boolean = false;
@@ -47,8 +50,8 @@ export class TopNavComponent implements OnInit {
       {
         label: 'Sign In',
         icon: 'pi pi-sign-in',
-        command: () => this.sidebarVisible = true  
+        command: () => this.sidebarVisible = !this.sidebarVisible
       },
-    ]
+    ];
   }
 }
