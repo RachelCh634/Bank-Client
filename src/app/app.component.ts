@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';  
 import { FloatLabelModule } from 'primeng/floatlabel';  
 import { ShowAllDonationComponent } from './components/show-all-donation/show-all-donation.component';
+import { ShowAllUsersComponent } from './components/show-all-users/show-all-users.component';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ import { ShowAllDonationComponent } from './components/show-all-donation/show-al
     MenubarModule,
     ButtonModule, 
     InputTextModule, 
-    FloatLabelModule
+    FloatLabelModule,
+    ShowAllUsersComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

@@ -1,6 +1,8 @@
-<p-button class="addDonation" label="Add Donation" icon="pi pi-plus" [rounded]="true" severity="secondary" (click)="openAddDonation()"/>
-<p-dialog [(visible)]="displayAddDonation" header="Add Donation" [modal]="true" [closable]="true" [dismissableMask]="true">
-    <app-add-donation></app-add-donation>
+<div class="allPage">
+    <p-button class="addDonation" label="Add Donation" icon="pi pi-plus" [rounded]="true" severity="secondary"
+    (click)="openAddDonation()" />
+<p-dialog [(visible)]="displayAddDonation" [modal]="true" [closable]="true" [dismissableMask]="true">
+    <app-add-donation (donationAdded)="onDonationAdded()"></app-add-donation>
 </p-dialog>
 <div class="donation-container">
     <p-card *ngFor="let donation of donations" class="donation-card">
@@ -10,7 +12,6 @@
         <div class="donation-title">DonorId: {{ donation.donorId }}</div>
         <div class="donation-title">HoursAvailable: {{ donation.hoursAvailable}}</div>
         <div class="donation-title">DonationCategory: {{ donation.donationCategory }}</div>
-        <!-- <div class="donation-title">DonationCategory: {{ donation.description }}</div> -->
         <ng-template pTemplate="footer">
             <div class="flex gap-3 mt-1">
                 <p-button label="Like" icon="pi pi-heart" severity="secondary" class="w-full custom-button"></p-button>
@@ -18,4 +19,5 @@
             </div>
         </ng-template>
     </p-card>
+</div>
 </div>

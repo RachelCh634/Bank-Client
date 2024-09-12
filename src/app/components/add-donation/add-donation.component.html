@@ -2,24 +2,28 @@
     <p>Donation Category: </p>
     <div class="field-container">
         <p-dropdown [options]="DonationCategoryArr" [(ngModel)]="DonationCategory" optionLabel="label"
-            placeholder="Select Donation Category">
+            placeholder="Select Donation Category" >
         </p-dropdown>
     </div>
     <div class="field-container">
         <p-floatLabel>
             <input id="HoursAvailable" type="number" pInputText [(ngModel)]="HoursAvailable" />
-            <label for="HoursAvailable">HoursAvailable</label>
+            <label for="HoursAvailable">Hours Available</label>
         </p-floatLabel>
     </div>
     <div class="field-container">
         <p-floatLabel>
             <input id="description" type="text" pInputText [(ngModel)]="description" />
-            <label for="description">description</label>
+            <label for="description">Description</label>
         </p-floatLabel>
     </div>
     <div class="submitDonation">
         <p-floatLabel>
-          <p-button label="Submit" [outlined]="true" icon="pi pi-check" iconPos="right" (click)="addDonation()" />
+            <p-button label="Submit" [outlined]="true" icon="pi pi-check" iconPos="right" (click)="addDonation()"
+                [disabled]="!DonationCategory || !HoursAvailable || !description" />
         </p-floatLabel>
-      </div>
+    </div>
+    <div *ngIf="isDonationAdded" class="success-message">
+        The donation was added successfully!
+    </div>
 </div>

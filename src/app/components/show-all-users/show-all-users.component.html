@@ -1,0 +1,11 @@
+<div class="users-container">
+    <p-card *ngFor="let user of users" class="user-card">
+        <div class="user-title">Name: {{ user.firstName+" "+user.lastName }}</div>
+        <div class="user-title">Role: {{ user.role }}</div>
+        <ng-template pTemplate="footer">
+            <div class="flex gap-3 mt-1">
+                <p-button label="Contact us" severity="secondary" class="w-full custom-button"></p-button>
+            </div>
+        </ng-template>
+    </p-card>
+</div>

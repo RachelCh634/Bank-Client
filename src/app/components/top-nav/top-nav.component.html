@@ -1,6 +1,6 @@
-<div class="card">
+<div class="card" id="top">
     <p-menubar [model]="items"></p-menubar>
 </div>
 <p-sidebar [(visible)]="sidebarVisible" position="bottom" class="custom-sidebar">
-    <app-login></app-login>
+    <app-login (userAdded)="onUserAdded()"></app-login>
 </p-sidebar>

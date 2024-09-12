@@ -5,25 +5,45 @@ import { SidebarModule } from 'primeng/sidebar';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { LoginComponent } from '../login/login.component';
 import { AddDonationComponent } from '../add-donation/add-donation.component';
+import { Router } from '@angular/router';
+import { ShowAllUsersComponent } from '../show-all-users/show-all-users.component';
 
 @Component({
   selector: 'app-top-nav',
   standalone: true,
-  imports: [MenubarModule, SidebarModule, LoginComponent, AddDonationComponent],
+  imports: [MenubarModule, SidebarModule, LoginComponent, AddDonationComponent, ShowAllUsersComponent],
   templateUrl: './top-nav.component.html',
   styleUrls: ['./top-nav.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
+
 export class TopNavComponent implements OnInit {
   items: MenuItem[] | undefined;
   sidebarVisible: boolean = false;
-
+  constructor(private router: Router) { }
   ngOnInit() {
     this.items = [
       {
         label: 'Home',
-        icon: 'pi pi-home'
+        icon: 'pi pi-home',
+        items: [
+          {
+            label: 'Our Partners',
+            icon: 'pi pi-users',
+            command: () => this.router.navigate(['AllUsers'])
+          },
+          {
+            label: 'All Donations',
+            icon: 'pi pi-users',
+            command: () => this.router.navigate(['AllDonations'])
+          },
+          {
+            label: 'Home Page',
+            icon: 'pi pi-align-center',
+            command: () => this.router.navigate(['']),
+          },
+        ]
       },
       {
         label: 'Like',
@@ -53,5 +73,9 @@ export class TopNavComponent implements OnInit {
         command: () => this.sidebarVisible = !this.sidebarVisible
       },
     ];
+  }
+
+  onUserAdded() {
+    this.sidebarVisible = false;
   }
 }

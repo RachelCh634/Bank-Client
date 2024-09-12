@@ -8,7 +8,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AddDonationComponent } from '../add-donation/add-donation.component';
 import { DialogModule } from 'primeng/dialog';
 
-
 @Component({
   selector: 'app-show-all-donation',
   standalone: true,
@@ -58,5 +57,8 @@ export class ShowAllDonationComponent {
       default:
         return '/assets/images/music.png';
     }
+  }
+  onDonationAdded() {
+    this.displayAddDonation = false;
   }
 }

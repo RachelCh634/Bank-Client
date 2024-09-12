@@ -8,18 +8,16 @@ import { IDonation } from '../models/donation.interface';
 })
 export class DonationService {
  
-  private readonly apiUrl: string = "https://localhost:7065/TimeDonations/GetAllDonations";
-  private readonly apiUrl1: string = "https://localhost:7065/TimeDonations/AddDonation";
-
+  private readonly baseUrl: string = "https://localhost:7065/TimeDonations";
 
   constructor(private http: HttpClient) { }
 
   public GetAllDonations(): Observable<IDonation[]> {
-    return this.http.get<IDonation[]>(this.apiUrl);
+    return this.http.get<IDonation[]>(`${this.baseUrl}/GetAllDonations`);
   }
 
   public AddDonation(donationData: any): Observable<any> {
     console.log(donationData)
-    return this.http.post<any>(this.apiUrl1, donationData);
+    return this.http.post<any>(`${this.baseUrl}/AddDonation`, donationData);
   }
 }

@@ -1,0 +1,25 @@
+.users-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    text-align: center;
+  }
+  
+  .user-card {
+    padding: 16px;
+    border-radius: 8px; 
+  }
+  
+  .user-title {
+    font-size: 1em;
+  }
+  .flex {
+    display: flex;
+    gap: 1rem; 
+  }
+  
+  .w-full {
+    width: 100%;
+  }
+  
