@@ -1,14 +1,14 @@
 .donation-container {
+  flex-grow: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 16px;
-  padding: 16px;
   text-align: center;
 }
 
 .donation-card {
   padding: 16px;
-  border-radius: 8px; 
+  border-radius: 8px;
 }
 
 .donation-title {
@@ -22,28 +22,104 @@
 .donation-button {
   width: 100%;
 }
+
 .flex {
   display: flex;
-  gap: 1rem; 
+  gap: 1rem;
 }
 
 .w-full {
   width: 100%;
 }
 
-
 .donation-card img {
   margin-top: 20px;
-  width: 100%; 
-  max-width: 140px; 
-  max-height: 140px; 
-  height: auto; 
+  width: 100%;
+  max-width: 140px;
+  max-height: 140px;
+  height: auto;
   border-radius: 4px;
-  object-fit: cover; 
+  object-fit: cover;
 }
-.addDonation{
-  margin-left:45%;
+
+.addDonation {
+  margin-left: 45%;
 }
-.allPage{
+
+.allPage {
   margin-top: 20px !important;
 }
+
+.page-layout {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px;
+}
+
+.filter-container {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  top: 0;
+  padding: 16px;
+}
+
+.filter-title {
+  font-size: 1.25em;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-subtitle {
+  font-size: 1em;
+  margin-bottom: 8px;
+}
+
+.filter-item {
+  width: 100%;
+}
+
+.p-treeselect .p-treeselect-token {
+  display: flex;
+  gap: 5px;
+}
+
+.w-20rem {
+  width: 20rem;
+}
+
+.w-30rem {
+  width: 30rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 16px;
+}
+
+.addDonation {
+  margin-left: 16px;
+}
+
+.small-image{
+  width: 140px;
+  height: 140px;
+  margin-left: 40px;
+  margin-bottom: 20px;
+}
+
+.selectHours{
+  margin-bottom: 20px;
+}
+
+.rangeHours{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+

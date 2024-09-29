@@ -1,0 +1,25 @@
+<div class="donation-container">
+    <p-card *ngFor="let donation of donations" class="donation-card">
+        <ng-template pTemplate="header">
+            <img [src]="getImage(donation.donationCategory)" alt="Card" />
+        </ng-template>
+        <div class="donation-title">Hours Available: {{ donation.hoursAvailable }}</div>
+        <div class="donation-title">Donation Category: {{ donation.donationCategory }}</div>
+        <p-tag [value]="donation.isActive ? 'Available' : donation.hoursAvailable == 0 ? 'Not Available' : 'Deleted'"
+            [severity]="donation.isActive ? 'success' : (donation.hoursAvailable == 0 ? 'danger' : 'info')"
+            class="absolute" [style.left.px]="4" [style.top.px]="4" />
+        <br>
+        <br>
+        <p-toast />
+        <p-confirmPopup>
+            <ng-template pTemplate="content" let-message>
+                <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
+                    <i [class]="message.icon" class="text-6xl text-primary-500"></i>
+                    <p>{{ message.message }}</p>
+                </div>
+            </ng-template>
+        </p-confirmPopup>
+        <p-button (onClick)="confirm($event,donation.id)" label="Delete" icon="pi pi-trash" severity="secondary"
+            [disabled]="!donation.isActive" />
+    </p-card>
+</div>

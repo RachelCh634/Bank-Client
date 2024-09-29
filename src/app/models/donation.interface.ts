@@ -4,4 +4,7 @@ export interface IDonation {
     DonationCategory: string,
     HoursAvailable: number,
     Rating: number,
+    CountRate:number,
+    Description:string,
+    IsActive:boolean,
 }

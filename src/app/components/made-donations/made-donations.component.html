@@ -1,0 +1,13 @@
+<div class="donation-container">
+    <p-card *ngFor="let donation of donations" class="donation-card">
+        <ng-template pTemplate="header">
+            <img [src]="getImage(getDetails(donation.donationId).category)" alt="Card" />
+        </ng-template>
+        <div *ngIf="getDetails(donation.donationId)">
+            <div class="donation-title">Count Hours: {{ donation.hours }}</div>
+            <div class="donation-title">Category: {{ getDetails(donation.donationId).category }}</div>
+            <div class="donation-title">DonorName: {{ getDetails(donation.donationId).name }}</div>
+            <div class="donation-title">Phone: {{ getDetails(donation.donationId).phone }}</div>
+        </div>
+    </p-card>
+</div>

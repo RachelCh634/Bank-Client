@@ -1,23 +1,91 @@
-<div class="allPage">
-    <p-button class="addDonation" label="Add Donation" icon="pi pi-plus" [rounded]="true" severity="secondary"
-    (click)="openAddDonation()" />
-<p-dialog [(visible)]="displayAddDonation" [modal]="true" [closable]="true" [dismissableMask]="true">
-    <app-add-donation (donationAdded)="onDonationAdded()"></app-add-donation>
-</p-dialog>
-<div class="donation-container">
-    <p-card *ngFor="let donation of donations" class="donation-card">
-        <ng-template pTemplate="header">
-            <img [src]="getImage(donation.donationCategory)" alt="Card" />
-        </ng-template>
-        <div class="donation-title">DonorId: {{ donation.donorId }}</div>
-        <div class="donation-title">HoursAvailable: {{ donation.hoursAvailable}}</div>
-        <div class="donation-title">DonationCategory: {{ donation.donationCategory }}</div>
-        <ng-template pTemplate="footer">
-            <div class="flex gap-3 mt-1">
-                <p-button label="Like" icon="pi pi-heart" severity="secondary" class="w-full custom-button"></p-button>
-                <p-button label="Take" icon="pi pi-check" severity="secondary" class="w-full custom-button"></p-button>
-            </div>
-        </ng-template>
+<div class="page-layout">
+  <div class="filter-container">
+    <h2 class="filter-title">
+      <i class="pi pi-sparkles"></i> Filters
+    </h2>
+
+    <div class="filter-item">
+      <p-treeSelect class="w-full" containerStyleClass="w-full" [(ngModel)]="selectedCategory"
+        [options]="DonationCategoryArr" display="chip" [metaKeySelection]="false" selectionMode="checkbox"
+        placeholder="Select Category" (ngModelChange)="filterDonations()" />
+    </div>
+
+    <div class="filter-item">
+      <p-treeSelect class="w-full" containerStyleClass="w-full" [(ngModel)]="selectedCity" [options]="CityArr"
+        display="chip" [metaKeySelection]="false" selectionMode="checkbox" placeholder="Select City     "
+        (ngModelChange)="filterDonations()" />
+    </div>
+
+    <div class="filter-item">
+      <span class="filter-subtitle">Minimum Hours</span>
+      <div class="flex justify-content-between w-full">
+        <strong class="rangeHours">{{ rangeHours }}</strong>
+      </div>
+      <p-slider [(ngModel)]="rangeHours" [min]="0" [max]="100" styleClass="w-full" (onChange)="filterDonations()" />
+
+    </div>
+
+    <div class="filter-item">
+      <p-iconField iconPosition="left">
+        <p-inputIcon styleClass="pi pi-search" />
+        <input type="text" pInputText placeholder="Search" [(ngModel)]="searchText"
+          (ngModelChange)="filterDonations()" />
+      </p-iconField>
+    </div>
+
+    <div class="button-container">
+      <p-button class="addDonation" label="Add Donation" icon="pi pi-plus" [rounded]="true" severity="secondary"
+        (click)="openAddDonation()" />
+      <p-dialog [(visible)]="displayAddDonation" [modal]="true" [closable]="true" [dismissableMask]="true">
+        <app-add-donation (donationAdded)="openAddDonation()"></app-add-donation>
+      </p-dialog>
+    </div>
+  </div>
+
+  <div class="donation-container">
+    <p-card *ngFor="let donation of getFilteredDonations()" class="donation-card">
+      <ng-template pTemplate="header">
+        <img [src]="getImage(donation.donationCategory)" alt="Card" />
+      </ng-template>
+      <div class="donation-title">Donor Name: {{ donation.firstName }} {{ donation.lastName }}</div>
+      <div class="donation-title">HoursAvailable: {{ donation.hoursAvailable }}</div>
+      <div class="donation-title">DonationCategory: {{ donation.donationCategory }}</div>
+      <ng-template pTemplate="footer">
+        <div class="flex gap-3 mt-1">
+          <p-button label="Like" icon="pi pi-heart" severity="secondary" class="w-full custom-button" (click)="addLike(donation.id)"></p-button>
+          <p-button label="Take" icon="pi pi-check" severity="secondary" class="w-full custom-button"
+            (onClick)="openTakeDonation(donation)"></p-button>
+        </div>
+      </ng-template>
     </p-card>
+  </div>
 </div>
-</div>
+
+<p-sidebar [(visible)]="sidebarVisible" position="right">
+  <h4>Take Hours</h4>
+  <div *ngIf="selectedDonation">
+    <img [src]="getImage(selectedDonation.donationCategory)" alt="Donation Image" class="small-image" />
+    <p><strong>Donor Name:</strong> {{ selectedDonation.firstName }} {{ selectedDonation.lastName }}</p>
+    <p><strong>Phone:</strong> {{ selectedDonation.phone }}</p>
+    <p><strong>City:</strong> {{ selectedDonation.city }}</p>
+    <p><strong>HoursAvailable:</strong> {{ selectedDonation.hoursAvailable }}</p>
+    <label for="hours">Select hours to take:</label>
+    <p-inputNumber [(ngModel)]="selectedHours" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]=1
+      [max]=selectedDonation.hoursAvailable class="selectHours" />
+
+      <p-toast />
+      <p-confirmPopup>
+        <ng-template pTemplate="content" let-message>
+          <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
+            <i [class]="message.icon" class="text-6xl text-primary-500"></i>
+            <p>{{ message.message }}</p>
+          </div>
+        </ng-template>
+      </p-confirmPopup>
+      <p-button (onClick)="confirm($event)" label="Take Hours" icon="pi pi-check"/>
+    </div>
+</p-sidebar>
+
+<p-dialog [(visible)]="dontConnect">
+  <strong *ngIf="dontConnect">You don't have an account, Please connect.</strong>
+</p-dialog>

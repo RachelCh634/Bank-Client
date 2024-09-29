@@ -58,7 +58,6 @@ export class AddDonationComponent {
           this.description=undefined;
           this.HoursAvailable=undefined;
           this.DonationCategory=undefined;
-
         }, 2000);
       },
       (error) => {

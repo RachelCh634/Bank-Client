@@ -1,5 +1,49 @@
-p-sidebar.custom-sidebar {
-    height: 80%;
-    max-height: 80%;
-    margin-bottom: 5px;
+.card {
+  .p-dialog {
+    .dialog-content {
+      padding: 2rem;
+      text-align: center;
+
+      .p-text-secondary {
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+
+      .field-container {
+        margin-top: 5px;
+
+        input {
+          width: 100%;
+          margin-top: 20px;
+        }
+
+        label {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .dialog-footer {
+      padding: 1rem;
+    }
+  }
+}
+
+.p-floatLabel {
+  width: 100%;
+}
+
+.btn {
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  p-button {
+    flex: 0.5;
+    margin: 0 5px;
+  }
+}
+
+.success-message {
+  margin-top: 1rem;
+  font-weight: bold;
 }

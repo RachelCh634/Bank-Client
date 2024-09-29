@@ -1,16 +1,56 @@
 .card {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center; 
-  gap: 15px; 
-  margin-top: 15px;  
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-top: 15px;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.profile-icon {
+  font-size: 1.5rem;
+  color: #007bff;
+}
+
+.profile-text {
+  display: flex;
+  align-items: center;
+}
+
+.profile-text strong {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .field-container {
-  flex: 1 1 200px; 
-  max-width: 300px; 
-  min-width: 150px; 
-  margin-top: 10px; 
+  flex: 1;
+  max-width: 300px;
+  min-width: 200px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 button {
@@ -18,35 +58,23 @@ button {
   border-radius: 15px;
   border: none;
   background-color: #007bff;
-  color: white; 
-  font-size: 1rem; 
-  cursor: pointer; 
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: #0056b3; 
+  background-color: #0056b3;
 }
 
 .p-floatLabel {
   width: 100%;
 }
-.profile-image {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%; 
-  object-fit: cover;
-  margin-right: 10px; 
-  margin-left: 0; 
-}
-.profile-container {
-  display: flex;
-  align-items: center; 
-  justify-content: flex-start;
-}
+
 .success-message {
   color: green;
-  margin-top: 20px; 
+  margin-top: 20px;
   font-weight: bold;
-  text-align: center; 
+  text-align: center;
 }

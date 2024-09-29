@@ -1,0 +1,54 @@
+.donation-container {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 16px;
+    text-align: center;
+}
+
+.donation-card {
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.donation-title {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.donation-content {
+    margin-top: 8px;
+}
+
+.flex {
+    display: flex;
+    gap: 1rem;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.donation-card img {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 140px;
+    max-height: 140px;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.page-layout {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px;
+}
+
+.small-image {
+    width: 140px;
+    height: 140px;
+    margin-left: 40px;
+    margin-bottom: 20px;
+}

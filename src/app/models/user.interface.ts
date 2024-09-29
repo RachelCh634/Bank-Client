@@ -1,10 +1,11 @@
 export interface IUser {
-    Id: number
-    FirstName: string
-    LastName: string
+    Id: string,
+    lastName: string
+    firstName: string
     Email: string
-    Address: string
+    city: string
     HoursDonation: number
     HoursAvailable: number
     Role: string
+    phone:string
 }
