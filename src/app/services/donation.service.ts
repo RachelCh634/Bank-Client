@@ -33,6 +33,14 @@ export class DonationService {
     return this.http.get<any>(`${this.baseUrl}/GetYourTake`, { headers });
   }
 
+  public GetYourLikes(): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<any>(`${this.baseUrl}/GetYourLikes`, { headers });
+  }
+
   public AddDonation(donationData: any): Observable<any> {
     console.log(donationData);
     const token = this.authService.getToken();
@@ -56,16 +64,22 @@ export class DonationService {
     return this.http.put<any>(`${this.baseUrl}/DeductAvailableHours`, {}, { params, headers });
   }
 
-  public DeleteDonation(id: number){
+  public DeleteDonation(id: number) {
     return this.http.delete<boolean>(`${this.baseUrl}/DeleteDonation/${id}`);
   }
 
-  public AddLike(id:number):Observable<any>{
+  public AddLike(id: number): Observable<any> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    console.log(id);
-    return this.http.post<any>(`${this.baseUrl}/AddLike`,id, { headers });
+    return this.http.post<any>(`${this.baseUrl}/AddLike/${id}`, null, { headers });
   }
+  public IsLiked(donationId: number): Observable<boolean> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<boolean>(`${this.baseUrl}/IsLiked/${donationId}`, { headers });
+}
 }

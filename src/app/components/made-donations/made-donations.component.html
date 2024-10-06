@@ -1,13 +1,22 @@
+<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
 <div class="donation-container">
     <p-card *ngFor="let donation of donations" class="donation-card">
         <ng-template pTemplate="header">
             <img [src]="getImage(getDetails(donation.donationId).category)" alt="Card" />
         </ng-template>
-        <div *ngIf="getDetails(donation.donationId)">
-            <div class="donation-title">Count Hours: {{ donation.hours }}</div>
-            <div class="donation-title">Category: {{ getDetails(donation.donationId).category }}</div>
-            <div class="donation-title">DonorName: {{ getDetails(donation.donationId).name }}</div>
-            <div class="donation-title">Phone: {{ getDetails(donation.donationId).phone }}</div>
+        <div *ngIf="getDetails(donation.donationId)" class="font-baloo-2">
+            <div>Count Hours: {{ donation.hours }}</div>
+            <div>Category: {{ getDetails(donation.donationId).category }}</div>
+            <div>DonorName: {{ getDetails(donation.donationId).name }}</div>
+            <div>Phone: {{ getDetails(donation.donationId).phone }}</div>
         </div>
+        <a [href]="'mailto:' + getDetails(donation.donationId).email">
+            <p-button icon="pi pi-envelope" [rounded]="true" [text]="true" [raised]="true" class="btnSpace" />
+        </a>
+        <a [href]="'tel:' + getDetails(donation.donationId).phone">
+            <p-button icon="pi pi-phone" [rounded]="true" [text]="true" [raised]="true" />
+        </a>
     </p-card>
 </div>

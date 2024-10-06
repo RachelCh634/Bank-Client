@@ -19,7 +19,6 @@ import { AuthService } from '../../services/auth.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
-
 @Component({
   selector: 'app-show-all-donation',
   standalone: true,
@@ -33,7 +32,7 @@ import { ToastModule } from 'primeng/toast';
 
 export class ShowAllDonationComponent {
 
-  constructor(private api: DonationService, private apiUser: UserService, private apiAuth: AuthService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
+  constructor(public api: DonationService, private apiUser: UserService, private apiAuth: AuthService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
   selectedCity: any[] = [];
   donations: any[] = [];
   filteredDonations: any[] = [];
@@ -45,6 +44,7 @@ export class ShowAllDonationComponent {
   selectedDonation: any = null;
   selectedHours: number = 1;
   dontConnect: boolean = false
+  likedDonations: { id: number, isLiked: boolean }[] = [];
 
   DonationCategoryArr: { label: string, value: string }[] = [
     { label: 'MakeUp', value: 'MakeUp' },
@@ -98,7 +98,8 @@ export class ShowAllDonationComponent {
   ngOnInit(): void {
     this.api.GetAllDonations().subscribe((data) => {
       this.donations = data;
-      console.log(this.donations)
+      console.log(this.donations);
+      
       this.donations.forEach(donation => {
         this.apiUser.GetUserById(donation.donorId).subscribe(user => {
           donation.firstName = user.firstName;
@@ -106,9 +107,16 @@ export class ShowAllDonationComponent {
           donation.city = user.city;
           donation.phone = user.phone;
         });
+        this.checkIfLiked(donation.id);
       });
-
+  
       this.filteredDonations = [...this.donations];
+    });
+  }
+  checkIfLiked(donationId: number) {
+    this.api.IsLiked(donationId).subscribe(isLiked => {
+      console.log("isLiked", isLiked)
+      this.likedDonations.push({ id: donationId, isLiked: isLiked });
     });
   }
   openAddDonation() {
@@ -167,7 +175,7 @@ export class ShowAllDonationComponent {
     });
   }
   getFilteredDonations() {
-    return this.filteredDonations.filter(donation => donation.hoursAvailable > 0);
+    return this.filteredDonations.filter(donation => donation.isActive == true);
   }
 
   reduceHours() {
@@ -209,6 +217,12 @@ export class ShowAllDonationComponent {
   }
 
   addLike(Id: number) {
+    const index = this.likedDonations.findIndex(product => product.id === Id);
+    if (index > -1) {
+      this.likedDonations[index].isLiked = !this.likedDonations[index].isLiked;
+    } else {
+      this.likedDonations.push({ id: Id, isLiked: true });
+    }
     this.api.AddLike(Id).subscribe({
       next: (response) => {
         console.log('Success:', response);
@@ -217,5 +231,10 @@ export class ShowAllDonationComponent {
         console.error('Error:', error);
       }
     });
+  }
+
+  isLiked(donationId: number): boolean {
+    const likedProduct = this.likedDonations.find(donation => donation.id === donationId);
+    return likedProduct ? likedProduct.isLiked : false;
   }
 }

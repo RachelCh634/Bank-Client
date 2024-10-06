@@ -14,6 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
+import { IUser } from '../../models/user.interface';
 
 @Component({
   selector: 'app-top-nav',
@@ -32,7 +33,8 @@ export class TopNavComponent implements OnInit {
   users: any[] = [];
   showMessage: boolean = false;
   isLoggedIn: boolean = false;
-  thisUser: string | undefined
+  userName: string | undefined
+  userRole: string | undefined
   constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
 
   ngOnInit() {
@@ -66,12 +68,12 @@ export class TopNavComponent implements OnInit {
       },
       {
         label: 'All Donations',
-        icon: 'pi pi-users',
+        icon: 'pi pi-list',
         command: () => this.router.navigate(['AllDonations'])
       },
       this.isLoggedIn ?
         {
-          label: this.thisUser,
+          label: this.userRole === 'Admin'? this.userName + ' Admin' : this.userName,
           icon: 'pi pi-user',
           items: [
             {
@@ -80,36 +82,55 @@ export class TopNavComponent implements OnInit {
             },
             {
               label: 'Like',
-              icon: 'pi pi-heart'
+              icon: 'pi pi-heart',
+              command: () => this.router.navigate(['ShowYourLikes'])
             },
             {
               label: 'My Donations',
-              icon: 'pi pi-arrow-right',
+              icon: 'pi pi-bars',
               command: () => this.router.navigate(['ShowYourDonations'])
             },
             {
               label: 'Made Donations',
-              icon: 'pi pi-arrow-right',
+              icon: 'pi pi-list-check',
               command: () => this.router.navigate(['YourMadeDonations'])
             },
             {
               label: 'LogOut',
               icon: 'pi pi-sign-out',
               command: () => this.handleLogout()
-            }
+            },
+            ...(this.userRole === 'Admin' ? [
+              {
+                label: 'Management',
+                icon: 'pi pi-cog',
+                items: [
+                  {
+                    label: 'Delete Users',
+                    icon: 'pi pi-user-minus',
+                    command: () => this.router.navigate(['DeleteUsers'])
+                  },
+                  {
+                    label: 'Delete Donations',
+                    icon: 'pi pi-trash',
+                    command: () => this.router.navigate(['DeleteDonations'])
+                  }
+                ]
+              }
+            ] : [])
           ]
         } :
         {
           label: 'Sign In',
           icon: 'pi pi-sign-in',
           command: () => this.showDialog()
-        }
+        },
     ];
   }
 
   handleLogout() {
     this.authService.logout();
-    this.thisUser = undefined;
+    this.userName = undefined;
     this.isLoggedIn = false
     this.updateMenuItems();
   }
@@ -167,18 +188,19 @@ export class TopNavComponent implements OnInit {
   }
 
   updateName() {
-    this.userService.GetUserName().subscribe(
-      (user: string) => {
-        if (user != undefined) {
-          this.thisUser = user;
+    this.userService.GetUserDetails().subscribe(
+      (userDetails: { fullName: string, role: string }) => {
+        if (userDetails != undefined) {
+          this.userName = userDetails.fullName;
+          this.userRole = userDetails.role;
+          console.log(this.userRole)
         }
         this.updateMenuItems();
       },
       (error) => {
-        console.error('Error fetching username:', error);
+        console.error('Error fetching user details:', error);
       }
     );
-    this.updateMenuItems();
   }
 }
 

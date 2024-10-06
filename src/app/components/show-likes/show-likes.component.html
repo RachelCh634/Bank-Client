@@ -1,0 +1,19 @@
+<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+<div class="donation-container">
+    <p-card *ngFor="let donation of donations" class="donation-card">
+        <ng-template pTemplate="header">
+            <img [src]="getImage(donation.donationCategory)" alt="Card" />
+        </ng-template>
+        <div class="font-baloo-2">
+            <div >HoursAvilable: {{ donation.hoursAvailable }}</div>
+            <div >Category: {{ donation.donationCategory }}</div>
+            <div >DonorName: {{ donation.name }}</div>
+            <div >Phone: {{ donation.phone }}</div>
+        </div>
+            <p-tag [value]="donation.isActive ? 'Available' : donation.hoursAvailable == 0 ? 'Not Available' : 'Deleted'"
+            [severity]="donation.isActive ? 'success' : (donation.hoursAvailable == 0 ? 'danger' : 'info')"
+            class="absolute" [style.left.px]="4" [style.top.px]="4"  />
+    </p-card>
+</div>

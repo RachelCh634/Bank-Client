@@ -1,37 +1,36 @@
+<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Darker+Grotesque:wght@300..900&family=Manrope:wght@200..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <div class="card-container">
-    <strong id="title"> Ours Members: </strong>
     <div *ngFor="let user of users" class="user-item">
-        <p-card class="user-card">
-            <div class="card">
-                <p-panel [toggleable]="true" [collapsed]="true" expandIcon="pi pi-minus" collapseIcon="pi pi-plus">
-                    <ng-template pTemplate="header">
-                        <div class="flex align-items-center gap-2">
-                            <i class="pi pi-user"></i>
-                            <strong class="font-bold">
-                                {{ user.firstName + " " + user.lastName }}
-                            </strong>
-                        </div>
-                    </ng-template>
-                    <ng-template pTemplate="content">
-                        <p><strong>Email:</strong> {{ user.email }}</p>
-                        <p><strong>Phone:</strong> {{ user.phone }}</p>
-                        <p><strong>City:</strong> {{ user.city }}</p>
-                        <div class="button-container">
-                            <a [href]="'mailto:' + user.email">
-                                <button pButton type="button" icon="pi pi-envelope" class="p-button-rounded p-button-info"
-                                    label="Send Email">
-                                </button>
-                            </a>
-
-                            <a [href]="'tel:' + user.phone">
-                                <button pButton type="button" icon="pi pi-phone" class="p-button-rounded p-button-success"
-                                    label="Call">
-                                </button>
-                            </a>
-                        </div>
-                    </ng-template>
-                </p-panel>
-            </div>
-        </p-card>
+      <p-card class="user-card">
+        <div class="card">
+          <p-panel [toggleable]="true" [collapsed]="true" expandIcon="pi pi-minus" collapseIcon="pi pi-plus">
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-user"></i>
+                <strong class="raleway">
+                  {{ user.firstName + " " + user.lastName }}
+                </strong>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <div class="raleway">
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Phone:</strong> {{ user.phone }}</p>
+                <p><strong>City:</strong> {{ user.city }}</p>
+              </div>
+              <div class="button-container">
+                <a [href]="'mailto:' + user.email">
+                  <p-button icon="pi pi-envelope" [rounded]="true" [text]="true" [raised]="true" />
+                </a>
+                <a [href]="'tel:' + user.phone">
+                  <p-button icon="pi pi-phone" [rounded]="true" [text]="true" [raised]="true" />
+                </a>
+                <p-button *ngIf="isAdmin" icon="pi pi-trash" (click)="deleteUser(user.id)" [rounded]="true" [text]="true" [raised]="true" />
+              </div>
+            </ng-template>
+          </p-panel>
+        </div>
+      </p-card>
     </div>
-</div>
+  </div>
+  

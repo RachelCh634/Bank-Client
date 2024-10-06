@@ -1,3 +1,7 @@
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+  </head>
 <div class="donation-container">
     <p-card *ngFor="let donation of donations" class="donation-card">
         <ng-template pTemplate="header">
@@ -7,7 +11,8 @@
         <div class="donation-title">Donation Category: {{ donation.donationCategory }}</div>
         <p-tag [value]="donation.isActive ? 'Available' : donation.hoursAvailable == 0 ? 'Not Available' : 'Deleted'"
             [severity]="donation.isActive ? 'success' : (donation.hoursAvailable == 0 ? 'danger' : 'info')"
-            class="absolute" [style.left.px]="4" [style.top.px]="4" />
+            class="absolute" [style.left.px]="4" [style.top.px]="4"
+            />
         <br>
         <br>
         <p-toast />
@@ -19,7 +24,7 @@
                 </div>
             </ng-template>
         </p-confirmPopup>
-        <p-button (onClick)="confirm($event,donation.id)" label="Delete" icon="pi pi-trash" severity="secondary"
+        <p-button (onClick)="confirm($event,donation.id)" label="Delete" icon="pi pi-trash" [text]="true" [raised]="true" 
             [disabled]="!donation.isActive" />
     </p-card>
 </div>

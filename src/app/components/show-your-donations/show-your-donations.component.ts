@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, makeEnvironmentProviders } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ import { DonationService } from '../../services/donation.service';
   imports: [ButtonModule, CardModule, CommonModule, TagModule, ConfirmPopupModule, ToastModule],
   templateUrl: './show-your-donations.component.html',
   styleUrls: ['./show-your-donations.component.scss'],
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService, MessageService],
 })
 export class ShowYourDonationsComponent {
   donations: any[] = [];
@@ -77,9 +77,7 @@ export class ShowYourDonationsComponent {
         this.donations = this.donations.filter(d => d.id != id)
         this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Donation deleted', life: 2000 });
       },
-      reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Donation not deleted', life: 2000 });
-      }
+      reject: () => { }
     });
   }
 }

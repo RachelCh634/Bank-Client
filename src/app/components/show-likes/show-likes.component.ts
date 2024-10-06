@@ -2,49 +2,53 @@ import { Component } from '@angular/core';
 import { DonationService } from '../../services/donation.service';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
 import { UserService } from '../../services/user.service';
+import { TagModule } from 'primeng/tag';
+import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-made-donations',
+  selector: 'app-show-likes',
   standalone: true,
-  imports: [CommonModule, CardModule,ButtonModule],
-  templateUrl: './made-donations.component.html',
-  styleUrl: './made-donations.component.scss'
+  imports: [CommonModule, CardModule,TagModule],
+  templateUrl: './show-likes.component.html',
+  styleUrl: './show-likes.component.scss'
 })
-
-export class MadeDonationsComponent {
+export class ShowLikesComponent {
   donations: any[] = [];
   allDonations: any[] = [];
   users: any[] = [];
   constructor(private api: DonationService, private apiUser: UserService) { }
+
   ngOnInit(): void {
-    this.api.GetYourTakes().subscribe((data) => {
-      this.donations = data;
-    });
-    this.api.GetAllDonations().subscribe((data) => {
-      this.allDonations = data;
-    })
-    this.apiUser.GetAllUsers().subscribe((data) => {
-      this.users = data;
+    forkJoin([
+      this.apiUser.GetAllUsers(),
+      this.api.GetAllDonations(),
+      this.api.GetYourLikes()
+    ]).subscribe(([users, donations, likes]) => {
+      this.users = users;
+      this.allDonations = donations;
+      this.donations = likes;
+      this.donations.forEach(d => {
+        const updatedDonation = this.getDonationById(d.donationId);
+        Object.assign(d, updatedDonation);
+      });
     });
   }
 
-  getDetails(donationId: number) {
-    const donation = this.allDonations.find(d => d.id == donationId);
+  getDonationById(id: number) {
+    const donation = this.allDonations.find(d => d.id === id);
     const user = this.users.find(user => user.id == donation.donorId);
     const details = {
-      category: donation.donationCategory,
-      active:donation.isActive,
+      donationCategory: donation.donationCategory,
+      hoursAvailable: donation.hoursAvailable,
       name: user.firstName + " " + user.lastName,
       phone: user.phone,
-      email:user.email
-    };
-    return details;
+      isActive: donation.isActive
+    }
+    return details
   }
 
   getImage(category: string): string {
-    console.log(category)
     switch (category) {
       case 'MakeUp':
         return '/assets/images/makeup.png';

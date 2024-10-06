@@ -25,18 +25,32 @@ export class UserService {
   public GetAllUsers(): Observable<IUser[]> {
     return this.http.get<IUser[]>(`${this.baseUrl}/GetAllUsers`);
   }
-
-  public GetUserName(): Observable<string> {
+  public GetUserById(userId: string): Observable<IUser> {
+    const user = userId.toString().padStart(9, '0');
+    return this.http.get<IUser>(`${this.baseUrl}/GetUserById/${user}`);
+  }
+  public GetUserDetails(): Observable<{ fullName: string, role: string }> {
     const token = this.authService.getToken();
-    console.log('Sending donation with token:', token);
+    console.log('Fetching user details with token:', token);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get(`${this.baseUrl}/GetUserName`, { headers, responseType: 'text' });
+    return this.http.get<{ fullName: string, role: string }>(`${this.baseUrl}/GetUserDetails`, { headers });
   }
 
-  public GetUserById(userId: number): Observable<IUser> {
-    const user = userId.toString().padStart(9, '0');
-    return this.http.get<IUser>(`${this.baseUrl}/GetUserById/${user}`);
+  public IsAdmin(): Observable<boolean> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<boolean>(`${this.baseUrl}/IsUserAdmin`, { headers });
+  }
+
+  public DeleteUser(id: string): Observable<boolean> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete<boolean>(`${this.baseUrl}/DeleteUser/${id}`, { headers });
   }
 }

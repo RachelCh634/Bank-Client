@@ -7,6 +7,10 @@
       .p-text-secondary {
         font-size: 1.2rem;
         font-weight: 500;
+        font-family: "Advent Pro", sans-serif;
+        font-optical-sizing: auto;
+        font-variation-settings:
+          "wdth" 100;
       }
 
       .field-container {
@@ -46,4 +50,8 @@
 .success-message {
   margin-top: 1rem;
   font-weight: bold;
+}
+.darker-grotesque {
+  font-family: "Darker Grotesque", sans-serif;
+  font-optical-sizing: auto;
 }
