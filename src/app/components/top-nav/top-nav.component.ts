@@ -14,7 +14,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
-import { IUser } from '../../models/user.interface';
 
 @Component({
   selector: 'app-top-nav',
@@ -98,7 +97,10 @@ export class TopNavComponent implements OnInit {
             {
               label: 'LogOut',
               icon: 'pi pi-sign-out',
-              command: () => this.handleLogout()
+              command: () => {
+                this.handleLogout();
+                this.router.navigate(['']);
+              }
             },
             ...(this.userRole === 'Admin' ? [
               {
@@ -189,7 +191,7 @@ export class TopNavComponent implements OnInit {
 
   updateName() {
     this.userService.GetUserDetails().subscribe(
-      (userDetails: { fullName: string, role: string }) => {
+      (userDetails: { fullName: string, role: string , email:string }) => {
         if (userDetails != undefined) {
           this.userName = userDetails.fullName;
           this.userRole = userDetails.role;

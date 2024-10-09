@@ -1,6 +1,12 @@
-<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&display=swap"
+  rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Manrope:wght@200..800&display=swap"
+  rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Manrope:wght@200..800&display=swap"
+  rel="stylesheet">
 <div class="page-layout">
   <div class="filter-container">
     <h2 class="filter-title">
@@ -59,12 +65,14 @@
         <span class="font-manrope">Donation Category: </span>
         <span class="font-baloo-2">{{ donation.donationCategory }}</span>
       </div>
-      
+
       <ng-template pTemplate="footer">
         <div class="flex gap-3 mt-1">
+          <p-button *ngIf="isAdmin" icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" (click)=confirm1($event,donation.id)/>
           <p-button [icon]="isLiked(donation.id) ? 'pi pi-heart-fill' : 'pi pi-heart'" [rounded]="true" [text]="true"
-          [raised]="true" (onClick)="addLike(donation.id)"></p-button>
-          <p-button label="Take" icon="pi pi-check" [text]="true" [raised]="true" (onClick)="openTakeDonation(donation)"/>
+            [raised]="true" (onClick)="addLike(donation.id)" [disabled]="!disableBtn"></p-button>
+          <p-button label="Take" icon="pi pi-check" [text]="true" [raised]="true" (onClick)="openTakeDonation(donation)"
+            [disabled]="!disableBtn" />
         </div>
       </ng-template>
     </p-card>
@@ -76,28 +84,42 @@
   <div *ngIf="selectedDonation">
     <img [src]="getImage(selectedDonation.donationCategory)" alt="Donation Image" class="small-image" />
     <div class="font-manrope">
-    <p><strong>Donor Name:</strong> {{ selectedDonation.firstName }} {{ selectedDonation.lastName }}</p>
-    <p><strong>Phone:</strong> {{ selectedDonation.phone }}</p>
-    <p><strong>City:</strong> {{ selectedDonation.city }}</p>
-    <p><strong>HoursAvailable:</strong> {{ selectedDonation.hoursAvailable }}</p>
-  </div>
+      <p><strong>Donor Name:</strong> {{ selectedDonation.firstName }} {{ selectedDonation.lastName }}</p>
+      <p><strong>Phone:</strong> {{ selectedDonation.phone }}</p>
+      <p><strong>City:</strong> {{ selectedDonation.city }}</p>
+      <p><strong>HoursAvailable:</strong> {{ selectedDonation.hoursAvailable }}</p>
+    </div>
     <label for="hours" class="font-advent">Select hours to take:</label>
     <p-inputNumber [(ngModel)]="selectedHours" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]=1
       [max]=selectedDonation.hoursAvailable class="selectHours" />
 
-      <p-toast />
-      <p-confirmPopup>
-        <ng-template pTemplate="content" let-message>
-          <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
-            <i [class]="message.icon" class="text-6xl text-primary-500"></i>
-            <p class="font-manrope">{{ message.message }}</p>
-          </div>
-        </ng-template>
-      </p-confirmPopup>
-      <p-button (onClick)="confirm($event)" label="Take Hours" icon="pi pi-check" [outlined]="true"/>
-    </div>
+    <p-toast />
+    <p-confirmPopup>
+      <ng-template pTemplate="content" let-message>
+        <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
+          <i [class]="message.icon" class="text-6xl text-primary-500"></i>
+          <p class="font-manrope">{{ message.message }}</p>
+        </div>
+      </ng-template>
+    </p-confirmPopup>
+    <p-button (onClick)="checkHoursAvailable($event)" label="Take Hours" icon="pi pi-check" [outlined]="true" />
+  </div>
 </p-sidebar>
 
 <p-dialog [(visible)]="dontConnect">
   <strong *ngIf="dontConnect" class="font-advent">You don't have an account, Please connect.</strong>
 </p-dialog>
+
+<p-dialog [(visible)]="dontAvailable">
+  <strong class="font-advent">You do not have enough donation hours in the system</strong>
+</p-dialog>
+
+<p-toast />
+<p-confirmPopup>
+    <ng-template pTemplate="content" let-message>
+        <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
+            <i [class]="message.icon" class="text-6xl text-primary-500"></i>
+            <p>{{ message.message }}</p>
+        </div>
+    </ng-template>
+</p-confirmPopup>

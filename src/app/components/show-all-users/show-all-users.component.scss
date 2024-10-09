@@ -24,3 +24,40 @@
   font-family: "Raleway", sans-serif;
   font-optical-sizing: auto;
 }
+
+.font-advent{
+  font-family: "Advent Pro", sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings:
+    "wdth" 100;
+}
+.font-manrope{
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.font-baloo-2 {
+  font-family: "Baloo 2", sans-serif;
+  font-optical-sizing: auto;
+}
+.header-container {
+  display: flex;
+  align-items: center; 
+}
+
+.header-container i {
+  margin-right: 10px; 
+}
+
+.custom-dialog .button-container {
+  display: flex;
+  margin-top: 1px; 
+  margin-right: 2%;
+  align-items: center;
+}
+.success-message {
+  color: green;
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+}

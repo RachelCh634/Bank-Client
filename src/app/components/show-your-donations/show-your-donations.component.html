@@ -15,16 +15,17 @@
             />
         <br>
         <br>
-        <p-toast />
-        <p-confirmPopup>
-            <ng-template pTemplate="content" let-message>
-                <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
-                    <i [class]="message.icon" class="text-6xl text-primary-500"></i>
-                    <p>{{ message.message }}</p>
-                </div>
-            </ng-template>
-        </p-confirmPopup>
         <p-button (onClick)="confirm($event,donation.id)" label="Delete" icon="pi pi-trash" [text]="true" [raised]="true" 
             [disabled]="!donation.isActive" />
     </p-card>
 </div>
+
+<p-toast />
+<p-confirmPopup>
+    <ng-template pTemplate="content" let-message>
+        <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-3">
+            <i [class]="message.icon" class="text-6xl text-primary-500"></i>
+            <p>{{ message.message }}</p>
+        </div>
+    </ng-template>
+</p-confirmPopup>

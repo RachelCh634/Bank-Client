@@ -44,6 +44,9 @@ export class ShowAllDonationComponent {
   selectedDonation: any = null;
   selectedHours: number = 1;
   dontConnect: boolean = false
+  disableBtn: boolean = false
+  dontAvailable: boolean = false
+  isAdmin: boolean = false;
   likedDonations: { id: number, isLiked: boolean }[] = [];
 
   DonationCategoryArr: { label: string, value: string }[] = [
@@ -96,20 +99,25 @@ export class ShowAllDonationComponent {
   ];
 
   ngOnInit(): void {
+    this.disableBtn = this.apiAuth.isLoggedIn()
+    this.apiUser.IsAdmin().subscribe((result) => {
+      this.isAdmin = result;
+    });
     this.api.GetAllDonations().subscribe((data) => {
       this.donations = data;
       console.log(this.donations);
-      
       this.donations.forEach(donation => {
-        this.apiUser.GetUserById(donation.donorId).subscribe(user => {
-          donation.firstName = user.firstName;
-          donation.lastName = user.lastName;
-          donation.city = user.city;
-          donation.phone = user.phone;
-        });
-        this.checkIfLiked(donation.id);
+        if (donation.isActive) {
+          this.apiUser.GetUserById(donation.donorId).subscribe(user => {
+            donation.firstName = user.firstName;
+            donation.lastName = user.lastName;
+            donation.city = user.city;
+            donation.phone = user.phone;
+          });
+          this.checkIfLiked(donation.id);
+        }
       });
-  
+
       this.filteredDonations = [...this.donations];
     });
   }
@@ -191,7 +199,20 @@ export class ShowAllDonationComponent {
       }
     });
   }
-
+  checkHoursAvailable(event: Event) {
+    this.apiUser.CountOfHoursAvailable().subscribe({
+      next: (hoursAvailable) => {
+        if (hoursAvailable < this.selectedHours) {
+          this.dontAvailable = true
+        } else {
+          this.confirm(event);
+        }
+      },
+      error: (err) => {
+        console.error('Error occurred:', err);
+      }
+    });
+  }
   confirm(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
@@ -204,6 +225,7 @@ export class ShowAllDonationComponent {
       rejectButtonStyleClass: 'p-button-outlined p-button-sm',
       acceptButtonStyleClass: 'p-button-sm',
       accept: () => {
+
         this.reduceHours();
         this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'The hours were taken successfully', life: 2000 });
         setTimeout(() => {
@@ -236,5 +258,31 @@ export class ShowAllDonationComponent {
   isLiked(donationId: number): boolean {
     const likedProduct = this.likedDonations.find(donation => donation.id === donationId);
     return likedProduct ? likedProduct.isLiked : false;
+  }
+
+  deleteDonation(id: number) {
+    console.log(id)
+    this.api.DeleteDonation(id).subscribe((result) => {
+      console.log(result)
+    });
+  }
+  confirm1(event: Event, id: number) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Are you sure you want to delete this donation?',
+      icon: 'pi pi-erase',
+      acceptIcon: 'pi pi-check mr-1',
+      rejectIcon: 'pi pi-times mr-1',
+      acceptLabel: 'Confirm',
+      rejectLabel: 'Cancel',
+      rejectButtonStyleClass: 'p-button-outlined p-button-sm',
+      acceptButtonStyleClass: 'p-button-sm',
+      accept: () => {
+        this.deleteDonation(id);
+        this.filteredDonations = this.filteredDonations.filter(d => d.id != id)
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Donation deleted', life: 2000 });
+      },
+      reject: () => { }
+    });
   }
 }

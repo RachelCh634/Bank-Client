@@ -1,8 +1,8 @@
 <div class="card flex justify-content-center">
   <div class="profile-container">
-    <i class="pi pi-user profile-icon"></i> 
+    <i class="pi pi-user profile-icon"></i>
     <div class="profile-text">
-      <strong>Sign Up</strong>
+      <strong>{{header}}</strong>
     </div>
   </div>
 
@@ -61,6 +61,6 @@
   </div>
 
   <div *ngIf="isUserAdded" class="success-message">
-    The User was added successfully!
+   {{massage}} 
   </div>
 </div>

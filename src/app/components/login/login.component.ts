@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -22,11 +22,15 @@ export class LoginComponent {
   lastname: string | undefined;
   email: string | undefined;
   phone: string | undefined;
+  header: string | undefined;
   selectedCity: string | undefined;
   isUserAdded: boolean = false;
   isUserLoggedIn: boolean = false;
+  massage: string = 'The User was added successfully!'
   @Output() userLoggedIn = new EventEmitter<void>();
   @Output() userAdded = new EventEmitter<void>();
+  @Input() isAdmin: boolean = false;
+  @Input() parent: string | undefined
 
   cities: string[] = [
     "Tel Aviv", "Jerusalem", "Haifa", "Be'er Sheva", "Eilat",
@@ -38,6 +42,9 @@ export class LoginComponent {
 
   constructor(private api: UserService, private authService: AuthService, private userService: UserService) { }
 
+  ngOnInit(): void {
+    this.header = this.editHeader();
+  }
   private resetFields(): void {
     this.id = undefined;
     this.firstname = undefined;
@@ -72,6 +79,14 @@ export class LoginComponent {
     }, 1000);
   }
 
+  editHeader(): string {
+    console.log('isAdmin:', this.isAdmin);
+    if (this.parent === 'addUserOrAdmin') {
+      return 'Add user / Admin';
+    }
+    return 'Sign Up';
+  }
+
   addUser(): void {
     const userData = {
       id: this.id,
@@ -81,24 +96,36 @@ export class LoginComponent {
       phone: this.phone,
       city: this.selectedCity,
     };
-
-    this.api.AddUser(userData).subscribe(
-      response => {
-        console.log('User added successfully', response);
-        this.handleUserAddedSuccess(response); 
-        
-        this.userService.login({ id: this.id, mail: this.email }).subscribe(
-          loginResponse => {
-            const token = loginResponse.token; 
-            console.log(token);
-            this.authService.setToken(token);
-            this.isUserLoggedIn = true; 
-          },
-          error => console.error('Error logging in', error)
-        );
-      },
-      error => console.error('Error adding user', error)
-    );
+    if (this.isAdmin) {
+      this.api.AddAdmin(userData).subscribe(
+        response => {
+          console.log('User added successfully', response);
+          this.handleUserAddedSuccess(response);
+        },
+        error => console.error('Error adding user', error)
+      );
+      this.massage = 'The Admin was added successfully!'
+    }
+    else {
+      this.api.AddUser(userData).subscribe(
+        response => {
+          console.log('User added successfully', response);
+          this.handleUserAddedSuccess(response);
+          if (this.parent != 'addUserOrAdmin') {
+            this.userService.login({ id: this.id, mail: this.email }).subscribe(
+              loginResponse => {
+                const token = loginResponse.token;
+                console.log(token);
+                this.authService.setToken(token);
+                this.isUserLoggedIn = true;
+              },
+              error => console.error('Error logging in', error)
+            );
+          }
+        },
+        error => console.error('Error adding user', error)
+      );
+    }
   }
 
   private handleUserAddedSuccess(response: any): void {

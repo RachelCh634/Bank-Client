@@ -1,0 +1,7 @@
+<div class="btn-container">
+    <p-button icon="pi pi-user" label="Add user" [text]="true" [raised]="true" (click)="addUserOrAdmin(false)"/>
+    <p-button icon="pi pi-shield" label="Add admin" [text]="true" [raised]="true" (click)="addUserOrAdmin(true)"/>
+</div>
+<p-dialog [(visible)]="sidebarVisible" [modal]="true" [closable]="true" [dismissableMask]="true">
+    <app-login [isAdmin]="isAdmin" [parent]="'addUserOrAdmin'" (userAdded)="onUserAdded()"></app-login>
+</p-dialog>

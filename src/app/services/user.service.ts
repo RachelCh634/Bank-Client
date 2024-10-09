@@ -22,20 +22,27 @@ export class UserService {
     return this.http.post<any>(`${this.baseUrl}/AddUser`, userData);
   }
 
-  public GetAllUsers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(`${this.baseUrl}/GetAllUsers`);
+  public AddAdmin(userData: any): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post<any>(`${this.baseUrl}/AddAdmin`, userData, {headers});
+  }
+
+  public GetAllUsers(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/GetAllUsers`);
   }
   public GetUserById(userId: string): Observable<IUser> {
     const user = userId.toString().padStart(9, '0');
     return this.http.get<IUser>(`${this.baseUrl}/GetUserById/${user}`);
   }
-  public GetUserDetails(): Observable<{ fullName: string, role: string }> {
+  public GetUserDetails(): Observable<{ fullName: string, role: string, email:string }> {
     const token = this.authService.getToken();
-    console.log('Fetching user details with token:', token);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<{ fullName: string, role: string }>(`${this.baseUrl}/GetUserDetails`, { headers });
+    return this.http.get<{ fullName: string, role: string , email:string }>(`${this.baseUrl}/GetUserDetails`, { headers });
   }
 
   public IsAdmin(): Observable<boolean> {
@@ -52,5 +59,13 @@ export class UserService {
       'Authorization': `Bearer ${token}`
     });
     return this.http.delete<boolean>(`${this.baseUrl}/DeleteUser/${id}`, { headers });
+  }
+
+  public CountOfHoursAvailable(): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<any>(`${this.baseUrl}/CountOfHoursAvailable`,{headers});
   }
 }
