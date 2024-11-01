@@ -5,13 +5,14 @@ import { CommonModule } from '@angular/common';
 import { TagModule } from 'primeng/tag';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { DonationService } from '../../services/donation.service';
 
 @Component({
   selector: 'app-show-your-donations',
   standalone: true,
-  imports: [ButtonModule, CardModule, CommonModule, TagModule, ConfirmPopupModule, ToastModule],
+  imports: [ButtonModule, CardModule, CommonModule, TagModule, ConfirmPopupModule, ConfirmDialogModule, ToastModule],
   templateUrl: './show-your-donations.component.html',
   styleUrls: ['./show-your-donations.component.scss'],
   providers: [ConfirmationService, MessageService],
@@ -19,14 +20,17 @@ import { DonationService } from '../../services/donation.service';
 export class ShowYourDonationsComponent {
   donations: any[] = [];
   delete: boolean = false;
+  noResult: boolean = false;
 
   constructor(private api: DonationService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.api.GetYourDonations().subscribe((data) => {
       this.donations = data;
+      this.noResult = this.donations.length === 0;
     });
   }
+
 
   getStatus(donation: any) {
     return donation.IsActive ? 'success' : 'danger';
@@ -61,23 +65,23 @@ export class ShowYourDonationsComponent {
     this.api.DeleteDonation(id).subscribe(() => {
     });
   }
+
   confirm(event: Event, id: number) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Are you sure you want to delete this donation?',
-      icon: 'pi pi-erase',
-      acceptIcon: 'pi pi-check mr-1',
-      rejectIcon: 'pi pi-times mr-1',
-      acceptLabel: 'Confirm',
-      rejectLabel: 'Cancel',
-      rejectButtonStyleClass: 'p-button-outlined p-button-sm',
-      acceptButtonStyleClass: 'p-button-sm',
+      message: 'Do you want to delete this donation?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
       accept: () => {
         this.deleteDonation(id);
         this.donations = this.donations.filter(d => d.id != id)
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Donation deleted', life: 2000 });
       },
-      reject: () => { }
+      reject: () => {
+      }
     });
   }
 }

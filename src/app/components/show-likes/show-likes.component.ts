@@ -5,19 +5,27 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { TagModule } from 'primeng/tag';
 import { forkJoin } from 'rxjs';
+import { TakeHoursComponent } from '../take-hours/take-hours.component';
+import { ButtonModule } from 'primeng/button';
+import { SidebarModule } from 'primeng/sidebar';
+import { ConfirmationService, MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-show-likes',
   standalone: true,
-  imports: [CommonModule, CardModule,TagModule],
+  imports: [CommonModule, CardModule, TagModule, TakeHoursComponent, ButtonModule, SidebarModule],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './show-likes.component.html',
   styleUrl: './show-likes.component.scss'
 })
 export class ShowLikesComponent {
+  constructor(private api: DonationService, private apiUser: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
+
   donations: any[] = [];
   allDonations: any[] = [];
   users: any[] = [];
-  constructor(private api: DonationService, private apiUser: UserService) { }
+  noResult: boolean = false
 
   ngOnInit(): void {
     forkJoin([
@@ -32,6 +40,7 @@ export class ShowLikesComponent {
         const updatedDonation = this.getDonationById(d.donationId);
         Object.assign(d, updatedDonation);
       });
+      this.noResult = this.donations.length === 0;
     });
   }
 
@@ -71,5 +80,19 @@ export class ShowLikesComponent {
       default:
         return '/assets/images/music.png';
     }
+  }
+
+  RemoveLike(donation: any) {
+    this.api.AddLike(donation.donationId).subscribe({
+      next: (response) => {
+        console.log('Success:', response);
+        this.donations = this.donations.filter(d => d.donationId !== donation.donationId);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Like removed successfully.' });
+      },
+      error: (error) => {
+        console.error('Error:', error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to remove like.' });
+      }
+    });
   }
 }

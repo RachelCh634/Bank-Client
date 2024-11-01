@@ -1,38 +1,101 @@
 .card {
-    width: 800px; 
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .field-container {
-    margin-bottom: 25px; 
-    width: 100%; 
-  }
-  
-  .p-dropdown {
-    width: 100%; 
-  }
-  
-  .p-inputtext {
-    width: 100%;
-  }
-  
-  .p-float-label label {
-    font-size: 16px; 
-    color: #333; 
-  }
-  
-  .p-float-label {
-    margin-bottom: 10px; 
-  }
-  .submitDonation{
-    margin-left: 85%;
+  width: 800px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.field-container {
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.p-dropdown {
+  width: 100%;
+}
+
+.p-inputtext {
+  width: 100%;
+}
+
+.p-float-label label {
+  font-size: 16px;
+  color: #333;
+}
+
+.p-float-label {
+  margin-bottom: 10px;
+}
+
+.submitDonation {
+  margin-left: 85%;
+}
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.font-advent {
+  font-family: "Advent Pro", sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
+}
+
+.font-manrope {
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.font-baloo-2 {
+  font-family: "Baloo 2", sans-serif;
+  font-optical-sizing: auto;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-label {
+  font-family: 'Advent Pro', sans-serif;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-item {
+  font-family: 'Advent Pro', sans-serif;
+}
+
+@media (max-width: 1024px) {
+  .card {
+    width: 600px;
   }
 
-  .success-message {
-    color: green;
-    margin-top: 10px;
-    font-weight: bold;
+  .submitDonation {
+    margin-left: 75%;
+  }
 }
-  
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .submitDonation {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .p-float-label label {
+    font-size: 14px;
+  }
+
+  .submitDonation {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+  }
+}

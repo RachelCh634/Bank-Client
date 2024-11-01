@@ -1,0 +1,109 @@
+.filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.filter-item {
+    margin-top: 1.5%;
+}
+
+.hours-container {
+    margin-left: 2%;
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    min-width: 100px;
+    max-width: 200px;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.rangeHours {
+    margin-bottom: 20px;
+    font-family: "Advent Pro", sans-serif;
+}
+
+@media (max-width: 600px) {
+    .filter-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .filter-item,
+    .hours-container {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 400px) {
+    .filter-container {
+        padding: 8px;
+    }
+
+    .filter-item {
+        margin-top: 5%;
+    }
+
+    .hours-container {
+        min-width: 80px;
+        max-width: 150px;
+    }
+}
+
+.font-advent {
+    font-family: "Advent Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "wdth" 100;
+}
+
+.font-manrope {
+    font-family: "Manrope", sans-serif;
+    font-optical-sizing: auto;
+}
+
+.font-baloo-2 {
+    font-family: "Baloo 2", sans-serif;
+    font-optical-sizing: auto;
+}
+
+.non-bold-button {
+    font-weight: normal;
+}
+
+:host ::ng-deep .p-treeselect-label .p-placeholder {
+    font-family: "Baloo 2", sans-serif;
+}
+
+:host ::ng-deep {
+    .non-bold-button .p-button-label {
+        font-weight: normal;
+        font-family: "Manrope", sans-serif;
+    }
+}
+
+:host ::ng-deep .chip-container .p-treeselect-label,
+:host ::ng-deep .chip-container .p-treeselect-item-label,
+:host ::ng-deep .filter-item input[pInputText] {
+    font-family: 'Manrope', sans-serif;
+}
+
+.non-bold-button .p-button-label {
+    font-family: 'Manrope', sans-serif;
+    font-weight: normal;
+}
+
+:host ::ng-deep .hours-container .p-slider {
+    font-family: 'Manrope', sans-serif;
+}

@@ -27,7 +27,7 @@ export class UserService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post<any>(`${this.baseUrl}/AddAdmin`, userData, {headers});
+    return this.http.post<any>(`${this.baseUrl}/AddAdmin`, userData, { headers });
   }
 
   public GetAllUsers(): Observable<any> {
@@ -37,12 +37,13 @@ export class UserService {
     const user = userId.toString().padStart(9, '0');
     return this.http.get<IUser>(`${this.baseUrl}/GetUserById/${user}`);
   }
-  public GetUserDetails(): Observable<{ fullName: string, role: string, email:string }> {
+  public GetUserDetails(): Observable<{ fullName: string, role: string, email: string }> {
     const token = this.authService.getToken();
+    console.log("token", token)
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<{ fullName: string, role: string , email:string }>(`${this.baseUrl}/GetUserDetails`, { headers });
+    return this.http.get<{ fullName: string, role: string, email: string }>(`${this.baseUrl}/GetUserDetails`, { headers });
   }
 
   public IsAdmin(): Observable<boolean> {
@@ -66,6 +67,30 @@ export class UserService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<any>(`${this.baseUrl}/CountOfHoursAvailable`,{headers});
+    return this.http.get<any>(`${this.baseUrl}/CountOfHoursAvailable`, { headers });
+  }
+
+  public CurrentUserId(): Observable<string> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<string>(`${this.baseUrl}/CurrentUserId`, {
+      headers,
+      responseType: 'text' as 'json'
+    });
+  }
+
+  public GetCurrentUser(): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<any>(`${this.baseUrl}/GetCurrentUser`, { headers });
+  }
+
+  public UpdateUser(userData: any): Observable<boolean> {
+    return this.http.put<any>(`${this.baseUrl}/UpdateUser`, userData);
   }
 }

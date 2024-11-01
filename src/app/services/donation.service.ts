@@ -78,8 +78,15 @@ export class DonationService {
   public IsLiked(donationId: number): Observable<boolean> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     });
     return this.http.get<boolean>(`${this.baseUrl}/IsLiked/${donationId}`, { headers });
-}
+  }
+
+  public RateDonation(donationId: number, rating: number): Observable<boolean> {
+    const params = new HttpParams()
+      .set('Id', donationId.toString())
+      .set('rating', rating.toString());
+    return this.http.put<boolean>(`${this.baseUrl}/RateDonation`, null, { params });
+  }
 }

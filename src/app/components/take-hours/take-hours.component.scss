@@ -2,10 +2,8 @@
   flex-grow: 1;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 16px;
   text-align: center;
-  gap: 10px;
-  padding-left: 5%;
-  padding-right: 5%;
 }
 
 .donation-card {
@@ -20,8 +18,7 @@
 .font-advent {
   font-family: "Advent Pro", sans-serif;
   font-optical-sizing: auto;
-  font-variation-settings:
-    "wdth" 100;
+  font-variation-settings: "wdth" 100;
 }
 
 .font-manrope {
@@ -32,18 +29,6 @@
 .font-baloo-2 {
   font-family: "Baloo 2", sans-serif;
   font-optical-sizing: auto;
-}
-
-.noResult {
-  font-family: "Baloo 2", sans-serif;
-  margin-left: 10%;
-  font-size: 1.8em;
-  color: rgb(52, 52, 52);
-}
-
-.button-container {
-  gap: 20px;
-  padding: 16px;
 }
 
 .donation-content {
@@ -77,14 +62,15 @@
   margin-left: 45%;
 }
 
+.allPage {
+  margin-top: 20px !important;
+}
+
 .page-layout {
   display: flex;
   justify-content: space-between;
-}
-
-.space {
-  gap: 10px;
-  padding: 5%;
+  gap: 20px;
+  padding: 16px;
 }
 
 .p-treeselect .p-treeselect-token {
@@ -100,10 +86,28 @@
   width: 30rem;
 }
 
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 16px;
+}
+
+.small-image {
+  width: 140px;
+  height: 140px;
+  margin-left: 40px;
+  margin-bottom: 20px;
+}
+
 @media (max-width: 600px) {
   .page-layout {
     flex-direction: column;
     align-items: center;
+  }
+
+  .filter-container {
+    width: 100%;
+    padding: 8px;
   }
 
   .donation-container {
@@ -116,6 +120,10 @@
   }
 
   .addDonation {
+    margin-left: 0;
+  }
+
+  .small-image {
     margin-left: 0;
   }
 }
@@ -153,49 +161,13 @@ p-iconField {
   }
 }
 
-@media (max-width: 900px) {
-  .donation-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.margin-top {
+  margin-top: 16%;
 }
+
 
 @media (max-width: 600px) {
-  .donation-container {
-    grid-template-columns: 1fr;
+  .p-dialog .font-advent {
+    font-size: 1em;
   }
-}
-
-.rating {
-  margin-top: 5%;
-}
-
-.title {
-  font-family: "Advent Pro", sans-serif;
-  margin-left: 8%;
-  padding: 0;
-  line-height: 1.2;
-}
-
-:host ::ng-deep {
-  .p-dialog .p-dialog-content {
-    font-family: "Advent Pro", sans-serif;
-    color: rgb(47, 43, 43);
-  }
-
-  .p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
-    background: rgb(47, 43, 43) !important;
-    color: white !important;
-  }
-
-  .p-dialog-title {
-    color: rgb(43, 41, 41) !important;
-    font-family: "Advent Pro", sans-serif;
-  }
-
-  .p-dialog .p-button {
-    font-family: "Manrope", sans-serif;
-  }
-}
-:host ::ng-deep .addDonation .p-button-label {
-  font-family: 'Manrope', sans-serif; 
 }

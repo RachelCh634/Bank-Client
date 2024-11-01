@@ -1,0 +1,37 @@
+<div class="filter-container">
+    <div class="filter-item">
+        <p-button label="Reset Filters" [outlined]="true" severity="secondary" icon="pi pi-filter-slash"
+            iconPos="right" (click)="resetFilters()" class="non-bold-button">
+        </p-button>
+    </div>
+    <div class="filter-item">
+        <p-treeSelect class="w-full" containerStyleClass="chip-container" [(ngModel)]="selectedCategory"
+            [options]="DonationCategoryArr" display="chip" [metaKeySelection]="false" selectionMode="checkbox"
+            placeholder="Select Category" (ngModelChange)="onFilterChange()">
+        </p-treeSelect>
+    </div>
+
+    <div class="filter-item">
+        <p-treeSelect class="w-full" containerStyleClass="chip-container" [(ngModel)]="selectedCity" [options]="CityArr"
+            display="chip" [metaKeySelection]="false" selectionMode="checkbox" placeholder="Select City"
+            (ngModelChange)="onFilterChange()">
+        </p-treeSelect>
+    </div>
+
+    <div class="filter-item">
+        <p-iconField iconPosition="left">
+            <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+            <input type="text" pInputText placeholder="Search" [(ngModel)]="searchText"
+                (ngModelChange)="onFilterChange()" style="width: 100%;">
+        </p-iconField>
+    </div>
+
+    <div class="hours-container">
+        <span class="font-advent">Minimum Hours</span>
+        <div class="flex w-full">
+            <strong class="rangeHours">{{ rangeHours }}</strong>
+        </div>
+        <p-slider [(ngModel)]="rangeHours" [min]="0" [max]="100" styleClass="w-full" (onChange)="onFilterChange()">
+        </p-slider>
+    </div>
+</div>

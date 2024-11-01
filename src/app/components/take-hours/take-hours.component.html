@@ -1,0 +1,23 @@
+<h4 class="font-advent">Take Hours</h4>
+<div *ngIf="selectedDonation">
+  <img [src]="getImage(selectedDonation.donationCategory)" alt="Donation Image" class="small-image" />
+  <div class="font-manrope">
+    <p><strong>Donor Name:</strong> {{ selectedDonation.firstName }} {{ selectedDonation.lastName }}</p>
+    <p><strong>Phone:</strong> {{ selectedDonation.phone }}</p>
+    <p><strong>City:</strong> {{ selectedDonation.city }}</p>
+    <p><strong>HoursAvailable:</strong> {{ selectedDonation.hoursAvailable }}</p>
+  </div>
+  <label for="hours" class="font-advent">Select hours to take:</label>
+  <p-inputNumber [(ngModel)]="selectedHours" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]=1
+    [max]=selectedDonation.hoursAvailable class="selectHours" />
+    
+  <div style="margin-top: 5%; margin-left: 10%;" class="font-advent">
+    <p-button (onClick)="checkHoursAvailable($event)" [outlined]="true">
+      <strong class="font-advent">Take Hours</strong>
+    </p-button>
+  </div>
+</div>
+
+<p-dialog [(visible)]="dontAvailable">
+  <strong class="font-advent">You do not have enough donation hours in the system</strong>
+</p-dialog>

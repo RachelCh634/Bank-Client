@@ -7,6 +7,7 @@ import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -40,7 +41,7 @@ export class LoginComponent {
     "Modi'in Illit"
   ];
 
-  constructor(private api: UserService, private authService: AuthService, private userService: UserService) { }
+  constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.header = this.editHeader();
@@ -59,30 +60,30 @@ export class LoginComponent {
       mail: this.email,
       id: this.id
     };
-
-    this.api.login(loginData).subscribe(
-      (response) => this.handleLoginSuccess(response),
+    this.userService.login(loginData).subscribe(
+      (response) => {
+        this.handleLoginSuccess(response),
+        this.router.navigate(['']);
+      },
       (error) => console.error('Error logging in', error)
     );
   }
 
   private handleLoginSuccess(response: any): void {
     const token = response.token;
-    console.log(token);
     this.authService.setToken(token);
     this.isUserLoggedIn = true;
-
     setTimeout(() => {
       this.isUserLoggedIn = false;
       this.userLoggedIn.emit();
       this.resetFields();
     }, 1000);
+    this.router.navigate([''])
   }
 
   editHeader(): string {
-    console.log('isAdmin:', this.isAdmin);
     if (this.parent === 'addUserOrAdmin') {
-      return 'Add user / Admin';
+      return 'Enter the details:';
     }
     return 'Sign Up';
   }
@@ -97,7 +98,7 @@ export class LoginComponent {
       city: this.selectedCity,
     };
     if (this.isAdmin) {
-      this.api.AddAdmin(userData).subscribe(
+      this.userService.AddAdmin(userData).subscribe(
         response => {
           console.log('User added successfully', response);
           this.handleUserAddedSuccess(response);
@@ -107,7 +108,7 @@ export class LoginComponent {
       this.massage = 'The Admin was added successfully!'
     }
     else {
-      this.api.AddUser(userData).subscribe(
+      this.userService.AddUser(userData).subscribe(
         response => {
           console.log('User added successfully', response);
           this.handleUserAddedSuccess(response);
@@ -115,9 +116,9 @@ export class LoginComponent {
             this.userService.login({ id: this.id, mail: this.email }).subscribe(
               loginResponse => {
                 const token = loginResponse.token;
-                console.log(token);
                 this.authService.setToken(token);
                 this.isUserLoggedIn = true;
+                this.router.navigate(['']);
               },
               error => console.error('Error logging in', error)
             );
@@ -135,5 +136,6 @@ export class LoginComponent {
       this.userAdded.emit();
       this.resetFields();
     }, 1000);
+    this.router.navigate(['']);
   }
 }

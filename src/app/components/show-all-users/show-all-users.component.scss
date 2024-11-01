@@ -14,6 +14,7 @@
 .card {
   box-shadow: 0px 4px 6px rgba(167, 168, 218, 0.1);
 }
+
 .button-container {
   display: flex;
   gap: 10px;
@@ -22,16 +23,17 @@
 
 .raleway {
   font-family: "Raleway", sans-serif;
-  font-optical-sizing: auto;
+  font-size: 90%;
+  margin-left: 2%;
 }
 
-.font-advent{
+.font-advent {
   font-family: "Advent Pro", sans-serif;
   font-optical-sizing: auto;
-  font-variation-settings:
-    "wdth" 100;
+  font-variation-settings: "wdth" 100;
 }
-.font-manrope{
+
+.font-manrope {
   font-family: "Manrope", sans-serif;
   font-optical-sizing: auto;
 }
@@ -40,24 +42,50 @@
   font-family: "Baloo 2", sans-serif;
   font-optical-sizing: auto;
 }
+
 .header-container {
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
 
 .header-container i {
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .custom-dialog .button-container {
   display: flex;
-  margin-top: 1px; 
+  margin-top: 1px;
   margin-right: 2%;
   align-items: center;
 }
+
 .success-message {
   color: green;
   margin-top: 20px;
   font-weight: bold;
   text-align: center;
+}
+
+:host ::ng-deep {
+  .p-button.p-button-text {
+    font-family: "Manrope", sans-serif;
+  }
+}
+
+@media (max-width: 1024px) {
+  .user-item {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-item {
+    width: 70%;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-item {
+    width: 90%;
+  }
 }

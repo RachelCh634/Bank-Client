@@ -60,8 +60,7 @@
 .font-advent {
     font-family: "Advent Pro", sans-serif;
     font-optical-sizing: auto;
-    font-variation-settings:
-        "wdth" 100;
+    font-variation-settings: "wdth" 100;
 }
 
 .font-manrope {
@@ -72,4 +71,52 @@
 .font-baloo-2 {
     font-family: "Baloo 2", sans-serif;
     font-optical-sizing: auto;
+}
+
+.rating {
+    margin-top: 5%;
+}
+
+.title {
+    font-family: "Advent Pro", sans-serif;
+    margin-top: 2.5%;
+    margin-left: 3%;
+}
+
+.noResult {
+    font-family: "Baloo 2", sans-serif;
+    margin-left: 6%;
+    font-size: 1.2em;
+    color: rgb(52, 52, 52);
+}
+
+@media (max-width: 768px) {
+    .donation-container {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        padding: 8px;
+    }
+
+    .small-image {
+        margin-left: 20px;
+    }
+
+    .page-layout {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .donation-title {
+        font-size: 0.9em;
+    }
+
+    .noResult {
+        font-size: 1em;
+        margin-left: 0;
+    }
+
+    .page-layout {
+        padding: 8px;
+    }
 }

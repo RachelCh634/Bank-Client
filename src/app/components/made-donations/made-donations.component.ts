@@ -4,47 +4,30 @@ import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { UserService } from '../../services/user.service';
+import { RatingModule } from 'primeng/rating';
+import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-made-donations',
   standalone: true,
-  imports: [CommonModule, CardModule,ButtonModule],
+  imports: [CommonModule, CardModule,ButtonModule,RatingModule,FormsModule],
   templateUrl: './made-donations.component.html',
   styleUrl: './made-donations.component.scss'
 })
 
 export class MadeDonationsComponent {
   donations: any[] = [];
-  allDonations: any[] = [];
-  users: any[] = [];
+  noResult:boolean=false
   constructor(private api: DonationService, private apiUser: UserService) { }
   ngOnInit(): void {
     this.api.GetYourTakes().subscribe((data) => {
       this.donations = data;
+      this.noResult = this.donations.length === 0;
     });
-    this.api.GetAllDonations().subscribe((data) => {
-      this.allDonations = data;
-    })
-    this.apiUser.GetAllUsers().subscribe((data) => {
-      this.users = data;
-    });
-  }
-
-  getDetails(donationId: number) {
-    const donation = this.allDonations.find(d => d.id == donationId);
-    const user = this.users.find(user => user.id == donation.donorId);
-    const details = {
-      category: donation.donationCategory,
-      active:donation.isActive,
-      name: user.firstName + " " + user.lastName,
-      phone: user.phone,
-      email:user.email
-    };
-    return details;
+    
   }
 
   getImage(category: string): string {
-    console.log(category)
     switch (category) {
       case 'MakeUp':
         return '/assets/images/makeup.png';
@@ -67,5 +50,11 @@ export class MadeDonationsComponent {
       default:
         return '/assets/images/music.png';
     }
+  }
+  onRate(donationId: number,rating:number): void {
+    this.api.RateDonation(donationId, rating).subscribe({
+      next: (result) => console.log('Rating saved:', result),
+      error: (err) => console.error('Error saving rating:', err)
+    });
   }
 }

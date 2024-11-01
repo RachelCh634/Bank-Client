@@ -1,0 +1,121 @@
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007ad9;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.field-container {
+    width: 100%;
+    margin-top: 15%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+@media (max-width: 600px) {
+    .form-title {
+        font-size: 20px;
+    }
+
+    .form-container {
+        padding: 15px;
+    }
+
+    .field-container {
+        margin-top: 10%; 
+    }
+
+    .button-container {
+        margin-top: 5%; 
+    }
+}
+
+@media (max-width: 400px) {
+    .form-title {
+        font-size: 18px;
+    }
+
+    .form-container {
+        padding: 10px; 
+    }
+
+    .field-container {
+        margin-top: 5%;
+    }
+
+    .button-container {
+        margin-top: 3%; 
+    }
+}
+
+.font-advent {
+    font-family: "Advent Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "wdth" 100;
+}
+
+.font-manrope {
+    font-family: "Manrope", sans-serif;
+    font-optical-sizing: auto;
+}
+
+.font-baloo-2 {
+    font-family: "Baloo 2", sans-serif;
+    font-optical-sizing: auto;
+}
+
+.success-message {
+    font-family: "Advent Pro", sans-serif;
+    color: green;
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.notUpdate-message {
+    font-family: "Advent Pro", sans-serif;
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.field-container input[pInputText] {
+    font-family: 'Manrope', sans-serif;
+}
+
+:host ::ng-deep .button-container .p-button {
+    font-family: 'Manrope', sans-serif;
+}
+
+:host ::ng-deep .field-container .p-floatLabel .p-dropdown {
+    font-family: 'Manrope', sans-serif;
+}
+
+:host ::ng-deep .field-container .p-dropdown {
+    font-family: 'Manrope', sans-serif; 
+}
+
+:host ::ng-deep .field-container .p-dropdown-label {
+    font-family: 'Manrope', sans-serif; 
+}

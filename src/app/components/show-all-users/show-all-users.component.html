@@ -17,15 +17,13 @@
       <div class="card">
         <p-panel [toggleable]="true" [collapsed]="true" expandIcon="pi pi-minus" collapseIcon="pi pi-plus">
           <ng-template pTemplate="header">
-            <div class="flex align-items-center gap-2">
-              <i class="pi" [ngClass]="user.role === 'Admin' ? 'pi-shield' : 'pi-user'"></i>
-              <strong class="raleway">
-                {{ user.firstName + " " + user.lastName }}
-              </strong>
-            </div>
+            <i class="pi" [ngClass]="user.role === 'Admin' ? 'pi-shield' : 'pi-user'"></i>
+            <strong class="raleway">
+              {{ user.firstName + " " + user.lastName }}
+            </strong>
           </ng-template>
           <ng-template pTemplate="content">
-            <div class="raleway">
+            <div class="font-baloo-2">
               <p><strong>Email:</strong> {{ user.email }}</p>
               <p><strong>Phone:</strong> {{ user.phone }}</p>
               <p><strong>City:</strong> {{ user.city }}</p>
@@ -33,10 +31,10 @@
             <div class="button-container">
               <a [href]="'mailto:' + user.email">
                 <p-button icon="pi pi-envelope" [rounded]="true" [text]="true" [raised]="true"
-                  (click)="funSendMessage(user.email,user.firstName+' '+user.lastName)" [disabled]="!disableBtn"/>
+                  (click)="funSendMessage(user.email,user.firstName+' '+user.lastName)" [disabled]="!disableBtn" />
               </a>
               <a [href]="'tel:' + user.phone">
-                <p-button icon="pi pi-phone" [rounded]="true" [text]="true" [raised]="true" [disabled]="!disableBtn"/>
+                <p-button icon="pi pi-phone" [rounded]="true" [text]="true" [raised]="true" [disabled]="!disableBtn" />
               </a>
               <p-button *ngIf="isAdmin" icon="pi pi-trash" (click)="confirm($event,user.id)" [rounded]="true"
                 [text]="true" [raised]="true" />
@@ -64,16 +62,16 @@
     <div class="p-fluid">
       <div class="p-field">
         <p-floatLabel>
-          <textarea id="float-input" rows="5" cols="30" pInputTextarea [(ngModel)]="message"></textarea>
+          <textarea id="float-input" rows="10" cols="40" pInputTextarea [(ngModel)]="message"></textarea>
           <label for="float-input"></label>
         </p-floatLabel>
       </div>
     </div>
     <p-footer>
       <div class="button-container">
+        <p-button label="Cancel" (click)="toggleSendMessage()" class="p-button-secondary"></p-button>
         <p-button label="Send" icon="pi pi-send" [disabled]="!message"
           (click)="sendEmail(currentUser.email,currentUser.name)"></p-button>
-        <p-button label="Cancel" icon="pi pi-times" (click)="toggleSendMessage()" class="p-button-secondary"></p-button>
       </div>
       <div *ngIf="showIsWork" class="success-message">
         {{isWorkMassage}}

@@ -9,6 +9,7 @@
 .donation-card {
   padding: 16px;
   background-color: white;
+  border-radius: 8px;
 }
 
 .donation-title {
@@ -44,7 +45,6 @@
   object-fit: cover;
 }
 
-
 .allPage {
   margin-top: 20px !important;
 }
@@ -61,4 +61,76 @@
   height: 140px;
   margin-left: 40px;
   margin-bottom: 20px;
+}
+
+.title {
+  font-family: "Advent Pro", sans-serif;
+  margin-left: 3%;
+  margin-top: 2.5%;
+}
+
+.noResult {
+  font-family: "Baloo 2", sans-serif;
+  margin-left: 6%;
+  font-size: 1.2em;
+  color: rgb(52, 52, 52);
+}
+
+:host ::ng-deep {
+  .p-button.p-button-text {
+    font-family: "Manrope", sans-serif;
+  }
+  
+  .p-dialog .p-button {
+    font-family: "Manrope", sans-serif;
+  }
+
+  .p-dialog .p-dialog-content {
+    font-family: "Advent Pro", sans-serif;
+    color: rgb(47, 43, 43);
+  }
+
+  .p-dialog-title {
+    color: rgb(43, 41, 41) !important;
+    font-family: "Advent Pro", sans-serif;
+  }
+}
+
+@media (max-width: 768px) {
+  .donation-container {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    padding: 8px;
+  }
+
+  .small-image {
+    margin-left: 20px;
+  }
+
+  .page-layout {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .noResult {
+    margin-left: 0;
+    font-size: 1em;
+  }
+
+  .donation-title {
+    font-size: 0.9em; 
+  }
+
+  .donation-card {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .donation-title {
+    font-size: 0.8em; 
+  }
+
+  .donation-card img {
+    max-width: 100px; 
+  }
 }

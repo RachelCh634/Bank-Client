@@ -87,7 +87,6 @@ export class ShowAllUsersComponent implements OnInit {
   sendEmail(email: string, name: string): void {
     this.userService.GetUserDetails().subscribe(
       (userDetails: { fullName: string, role: string, email: string }) => {
-        console.log(userDetails)
         if (userDetails != undefined) {
           this.userName = userDetails.fullName;
           this.userEmail = userDetails.email;

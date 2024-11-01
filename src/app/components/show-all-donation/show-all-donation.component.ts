@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { DonationService } from '../../services/donation.service';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
@@ -19,11 +19,16 @@ import { AuthService } from '../../services/auth.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
+import { ShowYourDonationsComponent } from '../show-your-donations/show-your-donations.component';
+import { TakeHoursComponent } from '../take-hours/take-hours.component';
+import { RatingModule } from 'primeng/rating';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
 @Component({
   selector: 'app-show-all-donation',
   standalone: true,
   imports: [CardModule, CommonModule, ButtonModule, DialogModule, AddDonationComponent, SidebarModule, FormsModule, TreeSelectModule, SliderModule,
-    InputIconModule, IconFieldModule, InputTextModule, DropdownModule, InputNumberModule, ConfirmPopupModule, ToastModule
+    InputIconModule, IconFieldModule, InputTextModule, DropdownModule, InputNumberModule, ConfirmPopupModule, ToastModule, ShowYourDonationsComponent, TakeHoursComponent, RatingModule, ConfirmDialogModule
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './show-all-donation.component.html',
@@ -33,107 +38,55 @@ import { ToastModule } from 'primeng/toast';
 export class ShowAllDonationComponent {
 
   constructor(public api: DonationService, private apiUser: UserService, private apiAuth: AuthService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
-  selectedCity: any[] = [];
-  donations: any[] = [];
-  filteredDonations: any[] = [];
-  displayAddDonation: boolean = false;
-  selectedCategory: any[] = [];
-  searchText: string = '';
-  rangeHours: number = 0;
+  @Input() filteredDonations: any[] = [];
   sidebarVisible: boolean = false;
   selectedDonation: any = null;
-  selectedHours: number = 1;
-  dontConnect: boolean = false
   disableBtn: boolean = false
   dontAvailable: boolean = false
   isAdmin: boolean = false;
   likedDonations: { id: number, isLiked: boolean }[] = [];
-
-  DonationCategoryArr: { label: string, value: string }[] = [
-    { label: 'MakeUp', value: 'MakeUp' },
-    { label: 'Photography', value: 'Photography' },
-    { label: 'Music', value: 'Music' },
-    { label: 'Hair styling', value: 'Hair styling' },
-    { label: 'Babysitter', value: 'Babysitter' },
-    { label: 'Baking & Cooking', value: 'Baking & Cooking' },
-    { label: 'Maintenance', value: 'Maintenance' },
-    { label: 'Household', value: 'Household' },
-    { label: 'Transportation', value: 'Transportation' }
-  ];
-
-  CityArr: { label: string, value: string }[] = [
-    { label: 'Jerusalem', value: 'Jerusalem' },
-    { label: 'Tel Aviv', value: 'Tel Aviv' },
-    { label: 'Haifa', value: 'Haifa' },
-    { label: 'Rishon LeZion', value: 'Rishon LeZion' },
-    { label: 'Petah Tikva', value: 'Petah Tikva' },
-    { label: 'Ashdod', value: 'Ashdod' },
-    { label: 'Netanya', value: 'Netanya' },
-    { label: 'Beersheba', value: 'Beersheba' },
-    { label: 'Holon', value: 'Holon' },
-    { label: 'Bnei Brak', value: 'Bnei Brak' },
-    { label: 'Ramat Gan', value: 'Ramat Gan' },
-    { label: 'Ashkelon', value: 'Ashkelon' },
-    { label: 'Rehovot', value: 'Rehovot' },
-    { label: 'Bat Yam', value: 'Bat Yam' },
-    { label: 'Kfar Saba', value: 'Kfar Saba' },
-    { label: 'Herzliya', value: 'Herzliya' },
-    { label: 'Ra\'anana', value: 'Ra\'anana' },
-    { label: 'Hadera', value: 'Hadera' },
-    { label: 'Lod', value: 'Lod' },
-    { label: 'Nazareth', value: 'Nazareth' },
-    { label: 'Modiin', value: 'Modiin' },
-    { label: 'Acre', value: 'Acre' },
-    { label: 'Nahariya', value: 'Nahariya' },
-    { label: 'Eilat', value: 'Eilat' },
-    { label: 'Tiberias', value: 'Tiberias' },
-    { label: 'Kiryat Gat', value: 'Kiryat Gat' },
-    { label: 'Rosh HaAyin', value: 'Rosh HaAyin' },
-    { label: 'Afula', value: 'Afula' },
-    { label: 'Sderot', value: 'Sderot' },
-    { label: 'Yavne', value: 'Yavne' },
-    { label: 'Dimona', value: 'Dimona' },
-    { label: 'Safed', value: 'Safed' },
-    { label: 'Karmiel', value: 'Karmiel' },
-    { label: 'Beit Shemesh', value: 'Beit Shemesh' }
-  ];
+  displayAddDonation: boolean = false;
+  dontConnect: boolean = false
+  currentUserId: string | null = null;
+  noResult: boolean = false;
+  showConfirmDialog: boolean = false
 
   ngOnInit(): void {
     this.disableBtn = this.apiAuth.isLoggedIn()
     this.apiUser.IsAdmin().subscribe((result) => {
       this.isAdmin = result;
     });
-    this.api.GetAllDonations().subscribe((data) => {
-      this.donations = data;
-      console.log(this.donations);
-      this.donations.forEach(donation => {
-        if (donation.isActive) {
-          this.apiUser.GetUserById(donation.donorId).subscribe(user => {
-            donation.firstName = user.firstName;
-            donation.lastName = user.lastName;
-            donation.city = user.city;
-            donation.phone = user.phone;
-          });
-          this.checkIfLiked(donation.id);
-        }
-      });
+    this.apiUser.CurrentUserId().subscribe((id) => {
+      this.currentUserId = id;
+    });
+  }
 
-      this.filteredDonations = [...this.donations];
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['filteredDonations'] && changes['filteredDonations'].currentValue) {
+      this.processFilteredDonations();
+    }
+  }
+
+  processFilteredDonations(): void {
+    this.filteredDonations.forEach(donation => {
+      if (donation.isActive) {
+        this.apiUser.GetUserById(donation.donorId).subscribe(user => {
+          donation.firstName = user.firstName;
+          donation.lastName = user.lastName;
+          donation.city = user.city;
+          donation.phone = user.phone;
+        });
+        this.checkIfLiked(donation.id);
+      }
     });
   }
-  checkIfLiked(donationId: number) {
-    this.api.IsLiked(donationId).subscribe(isLiked => {
-      console.log("isLiked", isLiked)
-      this.likedDonations.push({ id: donationId, isLiked: isLiked });
-    });
-  }
-  openAddDonation() {
-    if (this.apiAuth.isLoggedIn()) {
-      this.displayAddDonation = !this.displayAddDonation
-    }
-    else {
-      this.dontConnect = true
-    }
+  getFilteredDonations() {
+    const filtered = this.filteredDonations.filter(
+      donation => donation.isActive == true && donation.donorId != this.currentUserId
+    );
+
+    this.noResult = filtered.length === 0;
+    return filtered;
   }
 
   getImage(category: string): string {
@@ -161,97 +114,35 @@ export class ShowAllDonationComponent {
     }
   }
 
-  openTakeDonation(donation: any) {
-    this.sidebarVisible = true
-    this.selectedDonation = donation
-  }
-
-  filterDonations() {
-    const searchTerms = this.searchText.trim().toLowerCase().split(/\s+/);
-
-    this.filteredDonations = this.donations.filter(donation => {
-      const matchesCategory = this.selectedCategory.length === 0 || this.selectedCategory.some(category => category.value === donation.donationCategory);
-      const matchesCity = this.selectedCity.length === 0 || this.selectedCity.some(city => city.value === donation.city);
-      const matchesHours = donation.hoursAvailable >= this.rangeHours;
-      const matchesSearch = searchTerms.every(term =>
-        (donation.firstName && donation.firstName.toLowerCase().includes(term)) ||
-        (donation.lastName && donation.lastName.toLowerCase().includes(term)) ||
-        (donation.description && donation.description.toLowerCase().includes(term))
-      );
-
-      return matchesCategory && matchesCity && matchesHours && matchesSearch;
-    });
-  }
-  getFilteredDonations() {
-    return this.filteredDonations.filter(donation => donation.isActive == true);
-  }
-
-  reduceHours() {
-    const donationId = this.selectedDonation.id;
-    this.api.DeductAvailableHours(this.selectedHours, donationId).subscribe({
-      next: (response) => {
-        console.log('Success:', response);
-        this.selectedDonation.hoursAvailable -= this.selectedHours;
-        this.selectedHours = 1
-      },
-      error: (error) => {
-        console.error('Error:', error);
-      }
-    });
-  }
-  checkHoursAvailable(event: Event) {
-    this.apiUser.CountOfHoursAvailable().subscribe({
-      next: (hoursAvailable) => {
-        if (hoursAvailable < this.selectedHours) {
-          this.dontAvailable = true
-        } else {
-          this.confirm(event);
-        }
-      },
-      error: (err) => {
-        console.error('Error occurred:', err);
-      }
-    });
-  }
-  confirm(event: Event) {
-    this.confirmationService.confirm({
-      target: event.target as EventTarget,
-      message: 'We recommend contacting the donor before confirming the hours.',
-      icon: 'pi pi-exclamation-circle',
-      acceptIcon: 'pi pi-check mr-1',
-      rejectIcon: 'pi pi-times mr-1',
-      acceptLabel: 'Confirm',
-      rejectLabel: 'Cancel',
-      rejectButtonStyleClass: 'p-button-outlined p-button-sm',
-      acceptButtonStyleClass: 'p-button-sm',
-      accept: () => {
-
-        this.reduceHours();
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'The hours were taken successfully', life: 2000 });
-        setTimeout(() => {
-          this.sidebarVisible = false
-        }, 2000);
-      },
-      reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-      }
-    });
+  openAddDonation() {
+    if (this.apiAuth.isLoggedIn()) {
+      this.displayAddDonation = !this.displayAddDonation
+    }
+    else {
+      this.dontConnect = true
+    }
   }
 
   addLike(Id: number) {
-    const index = this.likedDonations.findIndex(product => product.id === Id);
-    if (index > -1) {
-      this.likedDonations[index].isLiked = !this.likedDonations[index].isLiked;
-    } else {
-      this.likedDonations.push({ id: Id, isLiked: true });
-    }
     this.api.AddLike(Id).subscribe({
       next: (response) => {
         console.log('Success:', response);
+        const index = this.likedDonations.findIndex(donation => donation.id === Id);
+        if (index > -1) {
+          this.likedDonations[index].isLiked = !this.likedDonations[index].isLiked;
+        } else {
+          this.likedDonations.push({ id: Id, isLiked: true });
+        }
       },
       error: (error) => {
         console.error('Error:', error);
       }
+    });
+  }
+
+  checkIfLiked(donationId: number) {
+    this.api.IsLiked(donationId).subscribe(isLiked => {
+      this.likedDonations.push({ id: donationId, isLiked: isLiked });
     });
   }
 
@@ -261,28 +152,36 @@ export class ShowAllDonationComponent {
   }
 
   deleteDonation(id: number) {
-    console.log(id)
     this.api.DeleteDonation(id).subscribe((result) => {
       console.log(result)
     });
   }
-  confirm1(event: Event, id: number) {
+
+  openTakeDonation(donation: any) {
+    this.sidebarVisible = true
+    this.selectedDonation = donation
+  }
+
+  toggleTakeHours() {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
+
+  confirm(event: Event, id: number) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Are you sure you want to delete this donation?',
-      icon: 'pi pi-erase',
-      acceptIcon: 'pi pi-check mr-1',
-      rejectIcon: 'pi pi-times mr-1',
-      acceptLabel: 'Confirm',
-      rejectLabel: 'Cancel',
-      rejectButtonStyleClass: 'p-button-outlined p-button-sm',
-      acceptButtonStyleClass: 'p-button-sm',
+      message: 'Do you want to delete this donation?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
       accept: () => {
         this.deleteDonation(id);
-        this.filteredDonations = this.filteredDonations.filter(d => d.id != id)
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Donation deleted', life: 2000 });
+        this.filteredDonations = this.filteredDonations.filter(d => d.id != id);
       },
-      reject: () => { }
+      reject: () => {
+      }
     });
   }
 }

@@ -1,0 +1,25 @@
+<h4 class="font-advent">Contact us</h4>
+<p-dropdown [options]="subjects" [(ngModel)]="selectedSubject" placeholder="Select a Subject">
+</p-dropdown>
+
+<div class="card flex justify-content-center" style="margin-top: 4%;">
+    <p-floatLabel>
+        <textarea id="float-input" rows="10" cols="90" pInputTextarea [(ngModel)]="content">
+        </textarea>
+        <label for="float-input">Content</label>
+    </p-floatLabel>
+</div>
+
+<div>
+    <strong class="font-advent">Estimated response within 3 business days</strong>
+</div>
+
+<div style="margin-top: 10px;">
+    <p-button label="Send" [outlined]="true" icon="pi pi-check" iconPos="right" 
+        (click)="sendContant()" [disabled]="!content || !selectedSubject">
+    </p-button>
+</div>
+
+<div class="success-message">
+    {{massage}}
+</div>

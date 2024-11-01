@@ -1,0 +1,72 @@
+.font-advent {
+  font-family: "Advent Pro", sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
+}
+
+.font-manrope {
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.font-baloo-2 {
+  font-family: "Baloo 2", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.success-message {
+  color: green;
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .success-message {
+    font-size: 0.9rem;
+  }
+  .font-advent, .font-manrope, .font-baloo-2 {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .success-message {
+    font-size: 0.85rem;
+  }
+  .font-advent, .font-manrope, .font-baloo-2 {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .success-message {
+    font-size: 0.8rem;
+  }
+  .font-advent, .font-manrope, .font-baloo-2 {
+    font-size: 0.85rem;
+  }
+}
+h4.font-advent {
+  font-size: 1.5rem;
+}
+
+.card {
+  width: 80%;
+}
+
+p-dropdown, p-floatLabel {
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box; 
+  resize: vertical; 
+  margin-left: 0;
+}
+
+div[style*="margin-top: 10px"] {
+  display: flex;
+}

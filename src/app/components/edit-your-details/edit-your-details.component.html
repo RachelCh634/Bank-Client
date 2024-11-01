@@ -1,0 +1,50 @@
+<div class="center-container">
+    <p class="form-title font-advent">Edit your details</p>
+    <div class="form-container">
+        <div class="field-container">
+            <p-floatLabel>
+                <input id="firstname" type="text" pInputText [(ngModel)]="firstname" />
+                <label for="firstname">First Name</label>
+            </p-floatLabel>
+        </div>
+
+        <div class="field-container">
+            <p-floatLabel>
+                <input id="lastname" type="text" pInputText [(ngModel)]="lastname" />
+                <label for="lastname">Last Name</label>
+            </p-floatLabel>
+        </div>
+
+        <div class="field-container">
+            <p-floatLabel>
+                <input id="email" type="email" pInputText [(ngModel)]="email" />
+                <label for="email">Email</label>
+            </p-floatLabel>
+        </div>
+
+        <div class="field-container">
+            <p-floatLabel>
+                <input id="phone" type="phone" pInputText [(ngModel)]="phone" />
+                <label for="phone">Phone</label>
+            </p-floatLabel>
+        </div>
+
+        <div class="field-container">
+            <p-floatLabel>
+                <p-dropdown id="city" [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City">
+                </p-dropdown>
+                <label for="city">City</label>
+            </p-floatLabel>
+        </div>
+    </div>
+    <div class="button-container">
+        <p-button label="Update" icon="pi pi-refresh"  [raised]="true" [text]="true" (click)="updateUser()">
+        </p-button>
+    </div>
+    <div *ngIf="update" class="success-message">
+        The details have been successfully updated.
+    </div>
+    <div *ngIf="notUpdate" class="notUpdate-message">
+        Oops, you didn't change the details.
+    </div>
+</div>

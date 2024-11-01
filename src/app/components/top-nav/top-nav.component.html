@@ -1,4 +1,9 @@
-<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Darker+Grotesque:wght@300..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Darker+Grotesque:wght@300..900&family=Manrope:wght@200..800&display=swap"
+    rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Caveat:wght@400..700&family=Darker+Grotesque:wght@300..900&family=Manrope:wght@200..800&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
 <div class="card" id="top">
     <p-menubar [model]="items" class="darker-grotesque"></p-menubar>
 
@@ -28,3 +33,19 @@
 <p-dialog [(visible)]="sidebarVisible" [modal]="true" [closable]="true" [dismissableMask]="true">
     <app-login *ngIf="!isUserIdValid" (userAdded)="onUserAdded()"></app-login>
 </p-dialog>
+
+<div class="card flex justify-content-center">
+    <p-dialog [modal]="true" [(visible)]="showContact" [style]="{ width: '50rem' }"
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+        <p>
+            <app-contact-us (closeDialog)="toggleContactDialog()">
+            </app-contact-us>
+        </p>
+    </p-dialog>
+</div>
+
+<p-sidebar [(visible)]="showEdit" position="left">
+    <ng-container *ngIf="showEdit">
+        <app-edit-your-details (closeDialog)="toggleEditDialog()"></app-edit-your-details>
+    </ng-container>
+</p-sidebar>
