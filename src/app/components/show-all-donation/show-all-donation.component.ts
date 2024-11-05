@@ -54,8 +54,11 @@ export class ShowAllDonationComponent {
   ngOnInit(): void {
     this.disableBtn = this.apiAuth.isLoggedIn()
     this.apiUser.IsAdmin().subscribe((result) => {
-      this.isAdmin = result;
+      setTimeout(() => {
+        this.isAdmin = result;
+      });
     });
+    
     this.apiUser.CurrentUserId().subscribe((id) => {
       this.currentUserId = id;
     });

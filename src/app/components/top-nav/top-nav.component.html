@@ -6,22 +6,21 @@
     rel="stylesheet">
 <div class="card" id="top">
     <p-menubar [model]="items" class="darker-grotesque"></p-menubar>
-
     <p-dialog header="Sign In" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }">
-        <div class="dialog-content">
-            <span>Please enter your ID to sign in:</span>
-            <div class="field-container">
+        <div class="dialog-content font-baloo-2">
+            <span class="enterId">Please enter your ID to sign in:</span>
+            <div class="field-container" style="margin-top: 20px;">
                 <p-floatLabel>
-                    <input id="id" type="text" pInputText [(ngModel)]="id" />
+                    <input id="id" type="text" pInputText [(ngModel)]="id" class="custom-input" />
                     <label for="id"></label>
                 </p-floatLabel>
             </div>
         </div>
 
         <div class="btn">
-            <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
-            <p-button label="Connect" (onClick)="checkUserId()" />
-            <p-button label="Sign Up" (onClick)="signUp()" />
+            <p-button label="Cancel" severity="secondary" (onClick)="visible = false" class="normal-button"></p-button>
+            <p-button label="Connect" (onClick)="checkUserId()" class="normal-button"></p-button>
+            <p-button label="Sign Up" (onClick)="signUp()" class="normal-button"></p-button>
         </div>
 
         <div *ngIf="showMessage" class="success-message">
@@ -29,6 +28,9 @@
         </div>
     </p-dialog>
 </div>
+
+
+
 
 <p-dialog [(visible)]="sidebarVisible" [modal]="true" [closable]="true" [dismissableMask]="true">
     <app-login *ngIf="!isUserIdValid" (userAdded)="onUserAdded()"></app-login>

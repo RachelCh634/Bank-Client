@@ -50,6 +50,8 @@
 .success-message {
   margin-top: 1rem;
   font-weight: bold;
+  font-size: 1.2em;
+  font-family: "Darker Grotesque", sans-serif;
 }
 .darker-grotesque {
   font-family: "Darker Grotesque", sans-serif;
@@ -83,7 +85,39 @@ app-edit-your-details {
   font-optical-sizing: auto;
 }
 
+
 .font-baloo-2 {
-  font-family: "Baloo 2", sans-serif;
-  font-optical-sizing: auto;
+  font-family: 'Baloo 2', cursive;
+}
+@media (max-width: 640px) {
+  .dialog-content {
+      padding: 1rem; 
+  }
+}
+
+.normal-button {
+  font-weight: normal;
+}
+
+.custom-input {
+  border: 2px solid #6d6262;
+  border-radius: 4px;
+  width: 80%;
+  max-width: 250px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1em;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  font-family: 'Manrope', sans-serif;
+}
+:host ::ng-deep {
+  .btn .p-button-label {
+      font-weight: normal;
+      font-family: "Manrope", sans-serif;
+  }
+}
+
+.enterId{
+  font-size: 1.2em;
 }

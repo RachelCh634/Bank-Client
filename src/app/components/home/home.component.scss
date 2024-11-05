@@ -1,42 +1,73 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* ביטול פסי גלילה */
+}
+
+.container {
+    display: flex;
+    height: 92vh; /* גובה המיכל - כל גובה המסך */
+    overflow: hidden; /* ביטול פסי גלילה עבור המיכל */
+}
+
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    overflow: hidden;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* תמלא את המיכל באופן יחסי ותיחתך אם צריך */
+}
+
+.text-container {
+    flex: 1;
+    text-align: left;
+    padding: 0;
+    margin-left: 5%;
+    margin-top: 5%;
+    font-family: "Baloo 2", sans-serif;
+    font-size: 1.2em;
+    overflow: hidden;
+}
+
+.center {
+    margin-top: 2%;
+    margin-left: 5%;
+}
+
 .welcome-title {
     font-family: "Baloo 2", sans-serif;
     font-size: 1.5em;
-    margin-bottom: 1%; 
-    margin-left: 5%;
-    margin-top: 4%;
-    color: #444343; 
-    text-align: left; 
+    color: #444343;
+    margin-bottom: 1rem;
 }
 
-.welcome-message {
-    font-family: "Baloo 2", sans-serif;
-    font-size: 1.1em; 
-    line-height: 1.5; 
-    text-align: left; 
-    margin-left: 5%;
-}
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+    }
 
-@media (max-width: 600px) {
+    .text-container {
+        padding-left: 0;
+        text-align: center;
+        font-size: 0.9em;
+        margin: 2%;
+    }
+
+    .image-container {
+        display: none;
+    }
+
     .welcome-title {
-        font-size: 1.5em; /* גודל טקסט קטן יותר במסכים קטנים */
-    }
-
-    .welcome-message {
-        font-size: 1em; /* גודל טקסט קטן יותר במסכים קטנים */
+        font-size: 1.2em;
     }
 }
-.font-advent{
-    font-family: "Advent Pro", sans-serif;
-    font-optical-sizing: auto;
-    font-variation-settings:
-      "wdth" 100;
-  }
-  .font-manrope{
-    font-family: "Manrope", sans-serif;
-    font-optical-sizing: auto;
-  }
-  
-  .font-baloo-2 {
-    font-family: "Baloo 2", sans-serif;
-    font-optical-sizing: auto;
-  }

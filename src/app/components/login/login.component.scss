@@ -141,3 +141,33 @@ button:hover {
     gap: 10px;
   }
 }
+
+:host ::ng-deep {
+  .button-container .p-button-label {
+    font-weight: normal;
+    font-family: "Manrope", sans-serif;
+  }
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-label {
+  font-family: 'Manrope', sans-serif;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-item {
+  font-family: 'Manrope', sans-serif;
+}
+
+
+.custom-input {
+  font-family: 'Manrope', sans-serif;
+}
+
+.field-container label {
+  font-family: 'Manrope', sans-serif;
+  color: #333;
+}
+
+.header {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.5em;
+}

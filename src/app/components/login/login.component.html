@@ -1,9 +1,8 @@
-
 <div class="card flex justify-content-center">
   <div class="profile-container">
     <i class="pi pi-user profile-icon"></i>
     <div class="profile-text">
-      <strong class="font-advent ">{{header}}</strong>
+      <strong class="header">{{header}}</strong>
     </div>
   </div>
 
@@ -11,21 +10,21 @@
     <div class="row">
       <div class="field-container">
         <p-floatLabel>
-          <input id="id" type="text" pInputText [(ngModel)]="id" />
+          <input id="id" type="text" pInputText [(ngModel)]="id" class="custom-input" />
           <label for="id">Id</label>
         </p-floatLabel>
       </div>
 
       <div class="field-container">
         <p-floatLabel>
-          <input id="firstname" type="text" pInputText [(ngModel)]="firstname" />
+          <input id="firstname" type="text" pInputText [(ngModel)]="firstname" class="custom-input" />
           <label for="firstname">First Name</label>
         </p-floatLabel>
       </div>
 
       <div class="field-container">
         <p-floatLabel>
-          <input id="lastname" type="text" pInputText [(ngModel)]="lastname" />
+          <input id="lastname" type="text" pInputText [(ngModel)]="lastname" class="custom-input" />
           <label for="lastname">Last Name</label>
         </p-floatLabel>
       </div>
@@ -34,22 +33,21 @@
     <div class="row">
       <div class="field-container">
         <p-floatLabel>
-          <input id="email" type="email" pInputText [(ngModel)]="email" />
+          <input id="email" type="email" pInputText [(ngModel)]="email" class="custom-input" />
           <label for="email">Email</label>
         </p-floatLabel>
       </div>
 
       <div class="field-container">
         <p-floatLabel>
-          <input id="phone" type="phone" pInputText [(ngModel)]="phone" />
+          <input id="phone" type="phone" pInputText [(ngModel)]="phone" class="custom-input" />
           <label for="phone">Phone</label>
         </p-floatLabel>
       </div>
 
       <div class="field-container">
         <p-floatLabel>
-          <p-dropdown id="city" [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City">
-          </p-dropdown>
+          <p-dropdown id="city" [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City"></p-dropdown>
           <label for="city">City</label>
         </p-floatLabel>
       </div>
@@ -62,6 +60,6 @@
   </div>
 
   <div *ngIf="isUserAdded" class="success-message">
-   {{massage}} 
+    {{massage}}
   </div>
 </div>
