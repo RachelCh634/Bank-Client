@@ -89,3 +89,23 @@
     width: 90%;
   }
 }
+:host ::ng-deep {
+  .p-dialog .p-dialog-content {
+    font-family: "Advent Pro", sans-serif;
+    color: rgb(47, 43, 43);
+  }
+
+  .p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
+    background: rgb(47, 43, 43) !important;
+    color: white !important;
+  }
+
+  .p-dialog-title {
+    color: rgb(43, 41, 41) !important;
+    font-family: "Advent Pro", sans-serif;
+  }
+
+  .p-dialog .p-button {
+    font-family: "Manrope", sans-serif;
+  }
+}

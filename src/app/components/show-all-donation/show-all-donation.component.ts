@@ -50,6 +50,7 @@ export class ShowAllDonationComponent {
   currentUserId: string | null = null;
   noResult: boolean = false;
   showConfirmDialog: boolean = false
+  
 
   ngOnInit(): void {
     this.disableBtn = this.apiAuth.isLoggedIn()

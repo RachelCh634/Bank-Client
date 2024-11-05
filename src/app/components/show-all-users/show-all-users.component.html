@@ -36,7 +36,7 @@
               <a [href]="'tel:' + user.phone">
                 <p-button icon="pi pi-phone" [rounded]="true" [text]="true" [raised]="true" [disabled]="!disableBtn" />
               </a>
-              <p-button *ngIf="isAdmin" icon="pi pi-trash" (click)="confirm($event,user.id)" [rounded]="true"
+              <p-button *ngIf="isAdmin|| user.id == currentUserId" icon="pi pi-trash" (click)="confirm($event,user.id)" [rounded]="true"
                 [text]="true" [raised]="true" />
             </div>
           </ng-template>

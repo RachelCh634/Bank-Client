@@ -20,7 +20,7 @@ import { EditYourDetailsComponent } from '../edit-your-details/edit-your-details
 @Component({
   selector: 'app-top-nav',
   standalone: true,
-  imports: [MenubarModule, SidebarModule, LoginComponent, AddDonationComponent, ShowAllUsersComponent, DialogModule, FormsModule, CommonModule, ButtonModule, InputTextModule, ContactUsComponent,EditYourDetailsComponent],
+  imports: [MenubarModule, SidebarModule, LoginComponent, AddDonationComponent, ShowAllUsersComponent, DialogModule, FormsModule, CommonModule, ButtonModule, InputTextModule, ContactUsComponent, EditYourDetailsComponent],
   templateUrl: './top-nav.component.html',
   styleUrls: ['./top-nav.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -39,7 +39,6 @@ export class TopNavComponent implements OnInit {
   userRole: string | undefined
   showContact: boolean = false;
   showEdit: boolean = false;
-
 
   constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
 
@@ -111,7 +110,7 @@ export class TopNavComponent implements OnInit {
                 this.handleLogout();
                 this.router.navigate(['']);
               }
-            }
+            },
           ]
         } :
         {
